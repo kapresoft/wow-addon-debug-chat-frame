@@ -1,0 +1,34 @@
+## Interface: 100206
+## Version: @project-version@
+## Title: DebugChagFrame|cff1784d1Plus|r Classic
+## Notes: A debug chat frame
+## Author: kapresoft@gmail.com
+## DefaultState: enabled
+## SavedVariables: DEBUG_CHAT_FRAME_PLUS_DB, DEBUG_CHAT_FRAME_LOG_LEVEL
+
+## LoadManagers: AddonLoader
+## X-LoadOn-Always: delayed
+
+## X-Min-Interface: 11401
+## X-Credits: kapresoft@gmail.com
+## X-Category: Development Tools
+## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask us about anything else.
+
+## X-Github-Repo: https://github.com/kapresoft/wow-addon-debug-chat-frame
+## X-Github-Issues: https://github.com/kapresoft/wow-addon-debug-chat-frame/issues
+## X-CurseForge: https://www.curseforge.com/wow/addons/debugchatframe
+## X-Curse-Project-ID: 1
+## X-Github-Project-Author: @project-author@
+## X-Github-Project-Hash: @project-hash@
+## X-Github-Project-Last-Changed-Date: @project-date-iso@
+## X-Github-Project-Version: @project-version@
+
+## X-WoWI-ID: 1
+
+## X-PayPal-Donation-ID: AX58YP3GSGXVU
+## X-PayPal-Donation-URL: https://www.paypal.com/donate/?hosted_button_id=AX58YP3GSGXVU
+
+# To get the Interface/Build Info
+# /dump select(4, GetBuildInfo())
+
+Core\_Core.xml
