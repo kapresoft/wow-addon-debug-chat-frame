@@ -1,4 +1,4 @@
-package-as: ActionbarPlus
+package-as: DebugChatFrame
 # --------------------------
 license-output: LICENSE.txt
 enable-nolib-creation: no
