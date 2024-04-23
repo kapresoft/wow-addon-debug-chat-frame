@@ -15,6 +15,23 @@ DebugChatFrame is a highly efficient library addon specifically designed to faci
 
 To start using *DebugChatFrame*, simply initialize it within your addon and call the `log` method whenever you need to output debug information. This frame helps keep your regular game chat clean and your debug statements organized.
 
+### Add to Your Addon Toc
+
+Adding the following to your addon's toc file will automatically load DebugChatFrame.
+
+```
+## OptionalDeps: DebugChatFrame
+```
+
+### Or Programmatically Load the AddOn
+
+With this option you don't need to add the `## OptionalDeps: DebugChatFrame` in the AddOn's toc file. You certainly can try to enable the addon and load it if it exists since the addon is LoadOnDemand.
+
+```lua
+EnableAddOn('DebugChatFrame', UnitName('player'))
+LoadAddOn('DebugChatFrame')
+```
+
 ## Ideal For
 
 This tool is ideal for addon developers looking for a simple, effective way to manage debug outputs without interfering with the standard gameplay experience. Whether you're developing a new addon or maintaining an existing one, DebugChatFrame provides a crucial service in managing debug information.
