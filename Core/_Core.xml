@@ -1,6 +1,15 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-    <Include file='DebugChatFrameMixin.lua'/>
+    <Include file='_ExtLib.xml'/>
 
+    <Script file="Core.lua"/>
+    <Include file="Fonts\_Fonts.xml" />
+    <!--@do-not-package@-->
+    <Include file="Developer\_DeveloperSetup.xml"/>
+    <!--@end-do-not-package@-->
+    <Script file="DebugChatFrameMixin.lua"/>
+    <!--@do-not-package@-->
+    <Include file="Developer\_Developer.xml"/>
+    <!--@end-do-not-package@-->
 </Ui>

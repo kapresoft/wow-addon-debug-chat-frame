@@ -48,6 +48,3 @@ ignore:
   - Core/ExtLib/WowAce/Ace3/Bindings.xml
   - Core/Lib/Developer
   - Dev.toc
-
-## Potentially helpful libraries
-## - https://www.wowace.com/projects/libactionbutton-1-0
