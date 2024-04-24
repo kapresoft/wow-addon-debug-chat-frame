@@ -11,7 +11,6 @@ New Instance
 local libName = 'Developer'
 --- @class Developer
 local L = {}
-ns:log(libName, 'Loaded...')
 
 --[[-----------------------------------------------------------------------------
 Methods
