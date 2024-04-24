@@ -166,8 +166,4 @@ The output of this usage would be "MainModule:: Hello There", formatted by the g
 
 ## Support
 
-For issues, suggestions, or contributions, please file and [issue](/issues/new/choose) to start the discussion.
-
----
-
-This guide provides a foundation that you can expand upon by adding more specific examples, screenshots, and troubleshooting tips as necessary. Make sure to include real links where mentioned, and tailor the content to fit the actual functionality and quirks of your library.
+For issues, suggestions, or contributions, please file and [issue](/kapresoft/wow-addon-debug-chat-frame/issues/new/choose) to start the discussion.
