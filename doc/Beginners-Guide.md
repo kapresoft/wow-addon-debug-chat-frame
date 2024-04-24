@@ -6,43 +6,55 @@
 
 DebugChatFrame is a load-on-demand World of Warcraft AddOn Library designed to help developers by providing a dedicated temporary Chat Frame for logging debug messages. This guide will walk you through the installation, usage, and API functions provided by DebugChatFrame to enhance your addon development process.
 
-## Installation via CurseForge App
+## Loading the Library
 
-The CurseForge App is a popular method for managing World of Warcraft addons, ensuring that you always have the latest updates and features. Follow these steps to download and install DebugChatFrame through the CurseForge App:
+### Declaring as an Optional Dependency
 
-1. **Install the CurseForge App:**
-   If you haven’t already installed the CurseForge App, download it from the official CurseForge website. Install the application on your computer following the provided instructions.
+To ensure that "DebugChatFrame" is loaded whenever your addon is running, it is recommended to declare it as an optional dependency in your addon's `.toc` file. This method ensures that "DebugChatFrame" is loaded before your addon if it is present, simplifying dependency management. Add the following line to your `.toc` file to set this up:
 
-2. **Open the CurseForge App:**
-   Launch the CurseForge App and select 'World of Warcraft' from the list of supported games.
+```
+## OptionalDeps: DebugChatFrame
+```
 
-3. **Navigate to the Addons Section:**
-   Once in the World of Warcraft interface, switch to the 'Get More Addons' tab. This is where you can browse and install new addons.
+This declaration helps prevent your addon from failing if "DebugChatFrame" is not installed, while also maintaining the ability to use its functionality when available.
 
-4. **Search for DebugChatFrame:**
-   Use the search bar at the top of the CurseForge interface and type "DebugChatFrame." Make sure you spell it correctly to find the addon.
+### Programmatically Loading the Addon
 
-5. **Install the Addon:**
-   Click on the DebugChatFrame in the search results, and then press the 'Install' button. The CurseForge App will automatically handle the download and installation process. It will place the DebugChatFrame folder in the correct directory (`_retail_\Interface\AddOns`).
+If you prefer a more dynamic approach, especially useful when your addon might need to enable or disable debugging features based on certain conditions or configurations, you can load "DebugChatFrame" programmatically. This method does not require modifying the `.toc` file and is particularly useful if "DebugChatFrame" is used conditionally or on demand. Use the following Lua script to load the library from within your addon:
 
-6. **Check for Updates:**
-   CurseForge App automatically checks for updates, but you can manually update DebugChatFrame by selecting it in the 'My Addons' tab and clicking 'Update' if an update is available.
+```lua
+-- Check if DebugChatFrame is installed and attempt to enable it for the current player
+if not IsAddOnLoaded('DebugChatFrame') then
+    EnableAddOn('DebugChatFrame', UnitName('player'))
+    LoadAddOn('DebugChatFrame')
+end
+```
 
-7. **Enable the Addon in WoW:**
-   Next time you launch World of Warcraft, make sure to enable DebugChatFrame from the AddOns menu in the character select screen. If it's not listed, restart your game to ensure it loads properly.
+This script performs a check to see if "DebugChatFrame" is already loaded to avoid unnecessary operations. If it is not loaded, the script tries to enable and then load the addon specifically for the player currently using the addon. This method ensures that "DebugChatFrame" is activated only when needed, optimizing resource use and initialization times.
 
-By following these steps, you should have DebugChatFrame installed and ready to help you with debugging your own addons. Remember to frequently check for updates to keep the library up-to-date with the latest features and bug fixes.
+To enhance the robustness and readability of your function, here's an improved version of your logging code. This version clarifies the decision-making process and ensures that it gracefully handles the presence or absence of the DebugChatFrame, defaulting to the standard console if the frame isn't available:
 
+```lua
+function ns.print(...)
+    -- Check if the debugFrame is available within the namespace
+    if ns.debugFrame then
+        -- If debugFrame exists, log the messages to it
+        return ns.debugFrame:log(...)
+    end
+   -- If debugFrame does not exist, fallback to the default print function
+   print(...)
+end
+```
 
-## Manual Installation
+### Explanation:
 
-1. **Download the Library:** Obtain the latest version of DebugChatFrame from the [official repository or download site].
-2. **Install the Library:** Place the DebugChatFrame folder into your World of Warcraft `_retail_\Interface\AddOns` directory.
-3. **Load the Library in Your AddOn:** Ensure DebugChatFrame is listed as an optional dependency in your AddOn's `.toc` file:
+1. **Checking the Existence**: The function first checks if `ns.debugFrame` exists. This check is crucial as it determines whether the custom logging or the standard logging should be used. Using `if ns.debugFrame then` is a straightforward and clear way to make this determination.
 
-   ```
-   ## OptionalDeps: DebugChatFrame
-   ```
+2. **Logging to Debug Frame**: If `ns.debugFrame` is available, the function passes all arguments to the `log` method of the debug frame. This is done using the unpacked arguments represented by `...`, which allows the function to handle any number and combination of arguments seamlessly.
+
+3. **Fallback to Standard Print**: In the absence of a debug frame, the function defaults to the standard `print` function. This ensures that your addon remains functional and that log messages are not lost, even if the debug setup is not active or properly configured.
+
+This approach not only ensures that your addon's logging is resilient but also maintains clear and easy-to-understand code, making maintenance and troubleshooting more straightforward.
 
 ## Usage
 
@@ -105,7 +117,15 @@ ns.debugFrame = DebugChatFrame:New(opt, function(chatFrame)
     chatFrame:SetFont('Fonts\\FRIZQT__.TTF', 11)
     chatFrame:SetTextColor(1, 0.5, 0)  -- Orange text
 end);
+
+-- in a lua module called Developer.lua, this is another log
+ns.debugFrame:logp('Developer', 'Loaded...')
 ```
+
+Here's an example debug chat frame using a fixed-width (monospace) font [_Inconsolata_](https://fonts.google.com/specimen/Inconsolata?classification=Monospace)
+
+![image](https://github.com/kapresoft/wow-addon-debug-chat-frame/assets/1599306/ab87d8e3-4db7-4671-bdd1-e4ea7fafceb5)
+
 
 #### Detailed Explanation:
 
@@ -163,7 +183,82 @@ c('MainModule::', 'Hello There')
 ```
 The output of this usage would be "MainModule:: Hello There", formatted by the global `c()` function, showing in the dedicated debug chat frame if available, or in the game's default chat otherwise.
 
+## Lua Code for an Example Usage
+
+```lua
+--[[-----------------------------------------------------------------------------
+DebugChatFrame Usage
+-------------------------------------------------------------------------------]]
+local addon, ns = ...
+local module = 'DebugChatFrameExample'
+
+--[[-----------------------------------------------------------------------------
+Type: ChatLogFrame
+-------------------------------------------------------------------------------]]
+--- @class _ChatLogFrame
+--- @field log fun(self:_ChatLogFrame, ...)
+--- @field logp fun(self:_ChatLogFrame, name:string, ...)
+
+--[[-----------------------------------------------------------------------------
+Type: DebugChatFrameOptions
+-------------------------------------------------------------------------------]]
+--- @class _DebugChatFrameOptions
+local opt = {
+    addon = addon,
+    chatFrameName = 'dev',
+    --- ### See Fonts: [_Fonts.xml](https://github.com/kapresoft/wow-addon-debug-chat-frame/blob/a0d3dca2d410198b9da1c9821e5b97c12f774cfc/Core/Fonts/_Fonts.xml)    font = DCF_ConsoleMonoCondensedSemiBold,
+    --- @see Blizzard Interface/FrameXML/Fonts.xml
+    --- @type Font
+    font = DCF_ConsoleMonoCondensedSemiBold,
+    size = 16,
+    windowAlpha = 1.0,
+    maxLines = 100,
+}
+
+--[[-----------------------------------------------------------------------------
+Type: DebugChatFrame Interface
+-------------------------------------------------------------------------------]]
+--- @alias DebugChatFrameCallbackFn fun(chatFrame:_ChatLogFrame) | "function(chatFrame) chatFrame:log('hello') end"
+---
+--- @class _DebugChatFrame
+--- @field New fun(self:_DebugChatFrame, opt:DebugChatFrameOptions, callbackFn:DebugChatFrameCallbackFn) : _ChatLogFrame
+
+--- interface
+--- @type _DebugChatFrame
+local DebugChatFrame = {}
+
+--[[-----------------------------------------------------------------------------
+Main Code
+-------------------------------------------------------------------------------]]
+
+local f = DebugChatFrame:New(opt, function(chatFrame)
+    chatFrame:log(module, 'chatFrame:', chatFrame:GetName())
+    chatFrame:log(module, 'options:', {1, 2, 3})
+    chatFrame:log(module, 'tab-name:', chatFrame:GetTabName())
+end);
+ns.chatFrame = f
+
+-- standard logging
+-- output: Hello World
+f:log('Hello', 'World')
+
+-- By Lua Module
+-- Output: {{ Addon::Module }}: Loading...
+f:logp(module, 'Loading...')
+
+-- define a global function c()
+--- @vararg any
+function c(...)
+    if ns.chatFrame then return ns.chatFrame:log(...) end
+    print(...)
+end
+
+-- Usage
+-- Output: MainModule:: Hello There
+c('MainModule::', 'Hello There')
+```
 
 ## Support
 
-For issues, suggestions, or contributions, please file and [issue](https://github.com/kapresoft/wow-addon-debug-chat-frame/issues/new/choose) to start the discussion.
+For issues, suggestions, or contributions, please file and [issue](/kapresoft/wow-addon-debug-chat-frame/issues/new/choose) to start the discussion.
+

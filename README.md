@@ -32,6 +32,37 @@ EnableAddOn('DebugChatFrame', UnitName('player'))
 LoadAddOn('DebugChatFrame')
 ```
 
+Here's an example of how to initial the developer chat frame:
+
+```lua
+--- @class DebugChatFrameOptions
+local opt = {
+    addon = addon,
+    --- The name is case-insensitive
+    chatFrameName = 'dev',
+    --- @see Blizzard Interface/FrameXML/Fonts.xml
+    --- @type Font
+    font = DCF_ConsoleMonoCondensedSemiBold,
+    size = 14,
+    windowAlpha = 1.0,
+    maxLines = 200,
+}
+
+--- provides a callback handler for further customization and also returns the frame itself
+local f = DebugChatFrame:New(opt, function(chatFrame)
+        chatFrame:SetAlpha(1.0)
+        local windowColor = GRAY_FONT_COLOR
+        FCF_SetWindowColor(chatFrame, windowColor:GetRGBA())
+        FCF_SetWindowAlpha(chatFrame, opt.windowAlpha)
+    end);
+
+--- can redirect all logs to the frame
+function log(...) f:AddMessage(...) end
+--- logs to the console
+log('Hello', 'World')
+```
+&nbsp;
+
 ## Ideal For
 
 This tool is ideal for addon developers looking for a simple, effective way to manage debug outputs without interfering with the standard gameplay experience. Whether you're developing a new addon or maintaining an existing one, DebugChatFrame provides a crucial service in managing debug information.
