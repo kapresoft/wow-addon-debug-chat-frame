@@ -166,4 +166,4 @@ The output of this usage would be "MainModule:: Hello There", formatted by the g
 
 ## Support
 
-For issues, suggestions, or contributions, please file and [issue](/kapresoft/wow-addon-debug-chat-frame/issues/new/choose) to start the discussion.
+For issues, suggestions, or contributions, please file and [issue](https://github.com/kapresoft/wow-addon-debug-chat-frame/issues/new/choose) to start the discussion.
