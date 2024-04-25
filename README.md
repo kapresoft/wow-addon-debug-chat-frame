@@ -14,7 +14,7 @@ DebugChatFrame is a highly efficient library addon specifically designed to faci
 ## Usage
 To get started, take a look at the [Beginner Guide](https://github.com/kapresoft/wow-addon-debug-chat-frame/wiki/DebugChatFrame-Beginner-Guide).
 
-The Core Interface can be found here [Core/Interface.lua](Core/Interface.lua)
+The Core _Interface.lua_ can be found here [Core/Interface.lua](Core/Interface.lua).  The Core Interface.lua file contains EmmyLua annotations that will help your IDE provide autocompletion, type checking, and other helpful intellisense features when developing World of Warcraft addons.
 
 ## Ideal For
 
