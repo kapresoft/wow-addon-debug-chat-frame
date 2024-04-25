@@ -12,56 +12,9 @@ DebugChatFrame is a highly efficient library addon specifically designed to faci
 - **Simple Logging Interface**: Use the straightforward method `chatFrame:log('hello', 'there')` to begin logging messages to the console. This method supports multiple arguments, allowing comprehensive messages to be logged efficiently.
 
 ## Usage
+To get started, take a look at the [Beginner Guide](https://github.com/kapresoft/wow-addon-debug-chat-frame/wiki/DebugChatFrame-Beginner-Guide).
 
-To start using *DebugChatFrame*, simply initialize it within your addon and call the `log` method whenever you need to output debug information. This frame helps keep your regular game chat clean and your debug statements organized.
-
-### Add to Your Addon Toc
-
-Adding the following to your addon's toc file will automatically load DebugChatFrame.
-
-```
-## OptionalDeps: DebugChatFrame
-```
-
-### Or Programmatically Load the AddOn
-
-With this option you don't need to add the `## OptionalDeps: DebugChatFrame` in the AddOn's toc file. You certainly can try to enable the addon and load it if it exists since the addon is LoadOnDemand.
-
-```lua
-EnableAddOn('DebugChatFrame', UnitName('player'))
-LoadAddOn('DebugChatFrame')
-```
-
-Here's an example of how to initial the developer chat frame:
-
-```lua
---- @class DebugChatFrameOptions
-local opt = {
-    addon = addon,
-    --- The name is case-insensitive
-    chatFrameName = 'dev',
-    --- @see Blizzard Interface/FrameXML/Fonts.xml
-    --- @type Font
-    font = DCF_ConsoleMonoCondensedSemiBold,
-    size = 14,
-    windowAlpha = 1.0,
-    maxLines = 200,
-}
-
---- provides a callback handler for further customization and also returns the frame itself
-local f = DebugChatFrame:New(opt, function(chatFrame)
-        chatFrame:SetAlpha(1.0)
-        local windowColor = GRAY_FONT_COLOR
-        FCF_SetWindowColor(chatFrame, windowColor:GetRGBA())
-        FCF_SetWindowAlpha(chatFrame, opt.windowAlpha)
-    end);
-
---- can redirect all logs to the frame
-function log(...) f:AddMessage(...) end
---- logs to the console
-log('Hello', 'World')
-```
-&nbsp;
+The Core Interface can be found here [Core/Interface.lua](Core/Interface.lua)
 
 ## Ideal For
 
