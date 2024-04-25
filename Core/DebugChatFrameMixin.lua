@@ -23,20 +23,20 @@ local CURSE_FORGE = 'X-CurseForge'
 New Instance
 -------------------------------------------------------------------------------]]
 local libShortName = 'DCF'
---- @class DebugChatFrame
+--- @class DebugChatFrame : DebugChatFrameInterface
 local L = {}; DebugChatFrame = L
 
---- @class DebugChatFrameOptions
+--- @class DebugChatFrameOptions : DebugChatFrameOptionsInterface
 local debugConsoleOptionsDefault = {
-    addon = addon,
+    addon         = addon,
     --- The name is case-insensitive
-    chatFrameName = 'dcf',
+    chatFrameTabName = 'dcf',
     --- @see Blizzard Interface/FrameXML/Fonts.xml
     --- @type Font
-    font = DCF_ConsoleMonoCondensedSemiBold,
-    size = 14,
-    windowAlpha = 1.0,
-    maxLines = 200,
+    font          = DCF_ConsoleMonoCondensedSemiBold,
+    fontSize      = 14,
+    windowAlpha   = 1.0,
+    maxLines      = 200,
 }
 
 --[[-----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ Methods
 -------------------------------------------------------------------------------]]
 --- @alias ChatLogFrame __ChatLogFrame | ScrollingMessageFrame
 
---- @class __ChatLogFrame
+--- @class __ChatLogFrame : ChatLogFrameInterface
 --- @field options DebugChatFrameOptions
 local ChatLogFrameMixin = {}
 ---@param o __ChatLogFrame | ChatLogFrame
@@ -138,7 +138,7 @@ local function PropsAndMethods(o)
     function o:New(opt, callbackFn)
         local def = debugConsoleOptionsDefault
         opt = opt or def
-        local name = opt.chatFrameName or def.chatFrameName
+        local name = opt.chatFrameTabName or def.chatFrameTabName
         assert(name, 'Chat frame name is required')
 
         --- @see Interface/FrameXML/ChatFrame.lua
@@ -146,7 +146,7 @@ local function PropsAndMethods(o)
         local chatFrame = FCF_OpenTemporaryWindow('CHANNEL20', 'player', nil, true)
         if not chatFrame then print(addon, c4('Failed to create temporary chat frame.')) return end
 
-        FCF_SetWindowName(chatFrame, opt.chatFrameName)
+        FCF_SetWindowName(chatFrame, opt.chatFrameTabName)
 
         chatFrame.options = opt
         Mixin(chatFrame, ChatLogFrameMixin)
@@ -154,7 +154,7 @@ local function PropsAndMethods(o)
         local maxLines = opt.maxLines or def.maxLines
         local font = opt.font or def.font
         local f, size, flags = font:GetFont()
-        if opt.size then size = opt.size end
+        if opt.fontSize then size = opt.fontSize end
         chatFrame:SetFont(f, size, flags)
         chatFrame:SetMaxLines(maxLines)
 
@@ -237,7 +237,7 @@ if not ns.debug:CreateTestChatFrame() then return end
 
 --- @type DebugChatFrameOptions
 local opt = shallow_copy(debugConsoleOptionsDefault)
-opt.size = 16
+opt.fontSize = 16
 opt.maxLines = 100
 L:New(opt, function(chatFrame)
     ns.chatFrame = chatFrame
