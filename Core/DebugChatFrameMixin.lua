@@ -127,6 +127,12 @@ local function ChatLogFrameMixin_PropsAndMethods(o)
     end
 
     function o:SelectInDock() FCF_SelectDockFrame(self) end
+    function o:SelectDefaultChatFrame() FCF_SelectDockFrame(ChatFrame1) end
+    --- @param selectDebugFrameInDock boolean
+    function o:InitialTabSelection(selectDebugFrameInDock)
+        if selectDebugFrameInDock then return self:SelectInDock() end
+        self:SelectDefaultChatFrame()
+    end
 
 end; ChatLogFrameMixin_PropsAndMethods(ChatLogFrameMixin)
 
