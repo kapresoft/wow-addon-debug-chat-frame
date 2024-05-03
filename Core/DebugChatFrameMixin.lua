@@ -37,6 +37,7 @@ local debugConsoleOptionsDefault = {
     fontSize      = 14,
     windowAlpha   = 1.0,
     maxLines      = 200,
+    makeDefaultChatFrame = true,
 }
 
 --[[-----------------------------------------------------------------------------
@@ -73,9 +74,9 @@ Methods
 /dump DEFAULT_CHAT_FRAME.name
 /dump ChatFrame1.name
 -------------------------------------------------------------------------------]]
---- @alias ChatLogFrame __ChatLogFrame | ScrollingMessageFrame
+--- @alias ChatLogFrame __ChatLogFrame | ChatLogFrameInterface | ChatFrame
 
---- @class __ChatLogFrame : ChatLogFrameInterface
+--- @class __ChatLogFrame
 --- @field options DebugChatFrameOptions
 local ChatLogFrameMixin = {}
 ---@param o __ChatLogFrame | ChatLogFrame
@@ -111,8 +112,13 @@ local function ChatLogFrameMixin_PropsAndMethods(o)
         self:log(self:prefix(module), ...)
     end
 
-    function o:IsSelected()
-        return FCFDock_GetSelectedWindow(GENERAL_CHAT_DOCK) == self
+    --- @return boolean
+    function o:IsSelected() return FCFDock_GetSelectedWindow(GENERAL_CHAT_DOCK) == self end
+
+    --- @return boolean
+    function o:IsTabShown()
+        local tab = self:GetTab()
+        return tab ~= nil and tab:IsShown()
     end
 
     function o:StartFlash()
@@ -121,17 +127,47 @@ local function ChatLogFrameMixin_PropsAndMethods(o)
     end
 
     function o:GetTabName()
-        local tab = _G[self:GetName() .. "Tab"]
-        if not tab then return nil end
-        return (tab.GetText and tab:GetText()) or nil
+        local tab = self:GetTab()
+        return (tab and tab.GetText and tab:GetText()) or nil
     end
 
+    --- @return ChatFrameTab
+    function o:GetTab() return _G[self:GetName() .. "Tab"] end
+
     function o:SelectInDock() FCF_SelectDockFrame(self) end
-    function o:SelectDefaultChatFrame() FCF_SelectDockFrame(ChatFrame1) end
+    function o:SelectDefaultChatFrame() return ChatFrame1 and FCF_SelectDockFrame(ChatFrame1) end
+
     --- @param selectDebugFrameInDock boolean
     function o:InitialTabSelection(selectDebugFrameInDock)
         if selectDebugFrameInDock then return self:SelectInDock() end
         self:SelectDefaultChatFrame()
+    end
+
+    function o:CloseTab()
+        self:RestoreDefaultChatFrame()
+        FCF_Close(self)
+    end
+
+    function o:RestoreDefaultChatFrame() DEFAULT_CHAT_FRAME = ChatFrame1 end
+
+    -- Note: There will be start-drag errors when replacing the entire
+    -- DEFAULT_CHAT_FRAME, i.e. when the debug console is active.
+    -- TODO: how to solve?
+    function o:SetAsDefaultChatFrameIfConfigured()
+        if self.options.makeDefaultChatFrame ~= true then return end
+        DEFAULT_CHAT_FRAME = self
+    end
+
+    ---@param selectInDock boolean|nil An optional parameter to select in dock
+    function o:RestoreChatFrame(selectInDock)
+        if self:IsVisible() then return end
+        self:SetAsDefaultChatFrameIfConfigured()
+
+        FCF_DockFrame(self, 100)
+        -- Ensure it's visible
+        if selectInDock ~= true then return end
+        self:Show()
+        self:SelectInDock()
     end
 
 end; ChatLogFrameMixin_PropsAndMethods(ChatLogFrameMixin)
@@ -144,6 +180,7 @@ local function PropsAndMethods(o)
     function o:New(opt, callbackFn)
         local def = debugConsoleOptionsDefault
         opt = opt or def
+        opt.makeDefaultChatFrame = opt.makeDefaultChatFrame ~= nil or def.makeDefaultChatFrame
         local name = opt.chatFrameTabName or def.chatFrameTabName
         assert(name, 'Chat frame name is required')
 
@@ -169,12 +206,17 @@ local function PropsAndMethods(o)
                 if delta > 0 then self:ScrollUp() else self:ScrollDown() end
             end)
         end
+
         -- other settings:
         -- shadow offset
         -- chatFrame:GetFontObject():SetShadowOffset(1.5, -1)
+
+        chatFrame:SetAsDefaultChatFrameIfConfigured()
         if callbackFn then callbackFn(chatFrame) end
 
-        C_Timer.After(1, function() FCF_StopAlertFlash(chatFrame) end)
+        C_Timer.After(1, function()
+            FCF_StopAlertFlash(chatFrame)
+        end)
 
         return chatFrame
     end
