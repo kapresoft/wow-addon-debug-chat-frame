@@ -18,6 +18,7 @@ local GITHUB_LAST_CHANGED_DATE = 'X-Github-Project-Last-Changed-Date'
 local GITHUB_REPO = 'X-Github-Repo'
 local GITHUB_ISSUES = 'X-Github-Issues'
 local CURSE_FORGE = 'X-CurseForge'
+local CLEAR_CONSOLE_MENU_ITEM_ID = "ClearConsoleMenuItemID"
 
 --[[-----------------------------------------------------------------------------
 New Instance
@@ -64,6 +65,21 @@ function GetFrameByName(name)
     end
 end
 
+--- @param self ChatLogFrame
+local function AddClearConsoleMenu(self)
+    if not (UIDropDownMenu_CreateInfo or UIDropDownMenu_AddButton) then return end
+
+    local info = UIDropDownMenu_CreateInfo()
+    info.text = 'Clear Console'
+    info.notCheckable = 1
+    info.value = CLEAR_CONSOLE_MENU_ITEM_ID
+    info.func = function() self:Clear() end
+    UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL)
+end
+
+--[[-----------------------------------------------------------------------------
+Color Formatters
+-------------------------------------------------------------------------------]]
 local c1 = NewFormatterFromColor(FACTION_ORANGE_COLOR)
 local c2 = NewFormatterFromColor(BLUE_FONT_COLOR)
 local c3 = NewFormatterFromColor(YELLOW_FONT_COLOR)
@@ -79,6 +95,7 @@ Methods
 --- @class __ChatLogFrame
 --- @field options DebugChatFrameOptions
 local ChatLogFrameMixin = {}
+
 ---@param o __ChatLogFrame | ChatLogFrame
 local function ChatLogFrameMixin_PropsAndMethods(o)
 
@@ -158,7 +175,7 @@ local function ChatLogFrameMixin_PropsAndMethods(o)
         DEFAULT_CHAT_FRAME = self
     end
 
-    ---@param selectInDock boolean|nil An optional parameter to select in dock
+    --- @param selectInDock boolean|nil An optional parameter to select in dock
     function o:RestoreChatFrame(selectInDock)
         if self:IsVisible() then return end
         self:SetAsDefaultChatFrameIfConfigured()
@@ -169,6 +186,13 @@ local function ChatLogFrameMixin_PropsAndMethods(o)
         self:Show()
         self:SelectInDock()
     end
+
+    --- @param tabDropDownName Name
+    function o:IsEqualToTabDropdownName(tabDropDownName)
+        local ddName = self:GetName() .. 'TabDropDown'
+        return ddName == tabDropDownName
+    end
+
 
 end; ChatLogFrameMixin_PropsAndMethods(ChatLogFrameMixin)
 
@@ -206,6 +230,16 @@ local function PropsAndMethods(o)
                 if delta > 0 then self:ScrollUp() else self:ScrollDown() end
             end)
         end
+
+        -- Hook into the dropdown menu
+        --- @param frame ChatFrame
+        hooksecurefunc("UIDropDownMenu_Initialize", function(frame)
+            -- this prevents the menu item from being added to "Font Size" menu level 2
+            if UIDROPDOWNMENU_MENU_LEVEL ~= 1 then return end
+            if not chatFrame:IsEqualToTabDropdownName(frame:GetName()) then return end
+
+            AddClearConsoleMenu(chatFrame)
+        end)
 
         -- other settings:
         -- shadow offset
