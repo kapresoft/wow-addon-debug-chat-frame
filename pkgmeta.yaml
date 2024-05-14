@@ -15,10 +15,10 @@ embedded-libraries:
   - LibStub
 
 tools-used:
-  - AddonUsage
-  - DevSuite
-  - BugSack
-  - !BugGrabber
+  - addon-usage
+  - devsuite
+  - bugsack
+  - bug-grabber
 
 # Resources:
 #  - https://github.com/wowace-mirror
