@@ -77,6 +77,9 @@ local function AddClearConsoleMenu(self)
     UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL)
 end
 
+--- @param tab ChatFrameTab
+local function _GetTabName(tab) return (tab and tab.GetText and tab:GetText()) or nil end
+
 --[[-----------------------------------------------------------------------------
 Color Formatters
 -------------------------------------------------------------------------------]]
@@ -96,223 +99,251 @@ Methods
 --- @field options DebugChatFrameOptions
 local ChatLogFrameMixin = {}
 
----@param o __ChatLogFrame | ChatLogFrame
-local function ChatLogFrameMixin_PropsAndMethods(o)
+--[[-----------------------------------------------------------------------------
+Methods: ChatLogFrameMixin
+-------------------------------------------------------------------------------]]
+--- @type __ChatLogFrame | ChatLogFrame
+local c = ChatLogFrameMixin
 
-    --- @private
-    --- @return string
-    --- @param module string
-    function o:prefix(module)
-        assert(module, 'Module:string is required.')
-        local name = (self.options and self.options.addon) or addon
-        local nameColor   = c1(name)
-        local moduleColor = c3(module)
-        return sformat('{{%s::%s}}:', nameColor, moduleColor)
+--- @private
+--- @return string
+--- @param module string
+function c:prefix(module)
+    assert(module, 'Module:string is required.')
+    local name = (self.options and self.options.addon) or addon
+    local nameColor   = c1(name)
+    local moduleColor = c3(module)
+    return sformat('{{%s::%s}}:', nameColor, moduleColor)
+end
+
+--- @vararg
+function c:log(...)
+    local args = {...}  -- Collect all arguments into a table
+    local texts = {}
+    for i, v in ipairs(args) do
+        if type(v) == "table" then texts[i] = pformat(v)
+        else texts[i] = tostring(v) end
+    end
+    local message = table.concat(texts, " ")
+    self:StartFlash()
+    self:AddMessage(message)
+end
+
+--- @vararg
+--- @param module string
+function c:logp(module, ...)
+    self:log(self:prefix(module), ...)
+end
+
+--- @return boolean
+function c:IsSelected() return FCFDock_GetSelectedWindow(GENERAL_CHAT_DOCK) == self end
+
+--- @return boolean
+function c:IsTabShown()
+    local tab = self:GetTab()
+    return tab ~= nil and tab:IsShown()
+end
+
+function c:StartFlash()
+    if self:IsSelected() then return FCF_StopAlertFlash(self) end
+    FCF_StartAlertFlash(self)
+end
+
+--- @return Name
+function c:GetTabName() return _GetTabName(self:GetTab()) end
+
+--- @return ChatFrameTab
+function c:GetTab() return _G[self:GetName() .. "Tab"] end
+
+function c:SelectInDock() FCF_SelectDockFrame(self) end
+function c:SelectDefaultChatFrame() return ChatFrame1 and FCF_SelectDockFrame(ChatFrame1) end
+
+--- @param selectDebugFrameInDock boolean
+function c:InitialTabSelection(selectDebugFrameInDock)
+    if selectDebugFrameInDock then return self:SelectInDock() end
+    self:SelectDefaultChatFrame()
+end
+
+--- @return string
+function c:GetChatFrameTabText() return DebugChatFrame:GetChatFrameTabText(self) end
+
+function c:CloseTab()
+    self:RestoreDefaultChatFrame()
+    FCF_Close(self)
+end
+
+function c:RestoreDefaultChatFrame() DEFAULT_CHAT_FRAME = ChatFrame1 end
+
+--- @param state boolean Setting to true will set the DebugChatFrame as the default chat frame
+function c:SetAsDefaultChatFrame(state)
+    if state == true then
+        DEFAULT_CHAT_FRAME = self; return
     end
 
-    --- @vararg
-    function o:log(...)
-        local args = {...}  -- Collect all arguments into a table
-        local texts = {}
-        for i, v in ipairs(args) do
-            if type(v) == "table" then texts[i] = pformat(v)
-            else texts[i] = tostring(v) end
-        end
-        local message = table.concat(texts, " ")
-        self:StartFlash()
-        self:AddMessage(message)
-    end
+    self:RestoreDefaultChatFrame()
+end
 
-    --- @vararg
-    --- @param module string
-    function o:logp(module, ...)
-        self:log(self:prefix(module), ...)
-    end
+-- Note: There will be start-drag errors when replacing the entire
+-- DEFAULT_CHAT_FRAME, i.e. when the debug console is active.
+-- TODO: how to solve?
+function c:SetAsDefaultChatFrameIfConfigured()
+    self:SetAsDefaultChatFrame(self.options.makeDefaultChatFrame == true)
+end
 
-    --- @return boolean
-    function o:IsSelected() return FCFDock_GetSelectedWindow(GENERAL_CHAT_DOCK) == self end
+--- @param selectInDock boolean|nil An optional parameter to select in dock
+function c:RestoreChatFrame(selectInDock)
+    if self:IsVisible() then return end
+    self:SetAsDefaultChatFrameIfConfigured()
 
-    --- @return boolean
-    function o:IsTabShown()
-        local tab = self:GetTab()
-        return tab ~= nil and tab:IsShown()
-    end
+    FCF_DockFrame(self, 100)
+    -- Ensure it's visible
+    if selectInDock ~= true then return end
+    self:Show()
+    self:SelectInDock()
+end
 
-    function o:StartFlash()
-        if self:IsSelected() then return FCF_StopAlertFlash(self) end
-        FCF_StartAlertFlash(self)
-    end
-
-    function o:GetTabName()
-        local tab = self:GetTab()
-        return (tab and tab.GetText and tab:GetText()) or nil
-    end
-
-    --- @return ChatFrameTab
-    function o:GetTab() return _G[self:GetName() .. "Tab"] end
-
-    function o:SelectInDock() FCF_SelectDockFrame(self) end
-    function o:SelectDefaultChatFrame() return ChatFrame1 and FCF_SelectDockFrame(ChatFrame1) end
-
-    --- @param selectDebugFrameInDock boolean
-    function o:InitialTabSelection(selectDebugFrameInDock)
-        if selectDebugFrameInDock then return self:SelectInDock() end
-        self:SelectDefaultChatFrame()
-    end
-
-    function o:CloseTab()
-        self:RestoreDefaultChatFrame()
-        FCF_Close(self)
-    end
-
-    function o:RestoreDefaultChatFrame() DEFAULT_CHAT_FRAME = ChatFrame1 end
-
-    -- Note: There will be start-drag errors when replacing the entire
-    -- DEFAULT_CHAT_FRAME, i.e. when the debug console is active.
-    -- TODO: how to solve?
-    function o:SetAsDefaultChatFrameIfConfigured()
-        if self.options.makeDefaultChatFrame ~= true then return end
-        DEFAULT_CHAT_FRAME = self
-    end
-
-    --- @param selectInDock boolean|nil An optional parameter to select in dock
-    function o:RestoreChatFrame(selectInDock)
-        if self:IsVisible() then return end
-        self:SetAsDefaultChatFrameIfConfigured()
-
-        FCF_DockFrame(self, 100)
-        -- Ensure it's visible
-        if selectInDock ~= true then return end
-        self:Show()
-        self:SelectInDock()
-    end
-
-    --- @param tabDropDownName Name
-    function o:IsEqualToTabDropdownName(tabDropDownName)
-        local ddName = self:GetName() .. 'TabDropDown'
-        return ddName == tabDropDownName
-    end
+--- @param tabDropDownName Name
+function c:IsEqualToTabDropdownName(tabDropDownName)
+    local ddName = self:GetName() .. 'TabDropDown'
+    return ddName == tabDropDownName
+end
 
 
-end; ChatLogFrameMixin_PropsAndMethods(ChatLogFrameMixin)
 
---- @param o DebugChatFrame
-local function PropsAndMethods(o)
+--[[-----------------------------------------------------------------------------
+Methods: DebugChatFrame
+-------------------------------------------------------------------------------]]
+--- @type DebugChatFrame
+local o = L
 
-    --- @param opt DebugChatFrameOptions
-    --- @param callbackFn fun(chatFrame:ChatLogFrame) | "function(chatFrame) end" | "Set additional settings in the callbackFn"
-    function o:New(opt, callbackFn)
-        local def = debugConsoleOptionsDefault
-        opt = opt or def
-        opt.makeDefaultChatFrame = opt.makeDefaultChatFrame ~= nil or def.makeDefaultChatFrame
-        local name = opt.chatFrameTabName or def.chatFrameTabName
-        assert(name, 'Chat frame name is required')
+--- @param opt DebugChatFrameOptions
+--- @param callbackFn fun(chatFrame:ChatLogFrame) | "function(chatFrame) end" | "Set additional settings in the callbackFn"
+function o:New(opt, callbackFn)
+    local def = debugConsoleOptionsDefault
+    opt = opt or def
+    opt.makeDefaultChatFrame = opt.makeDefaultChatFrame ~= nil or def.makeDefaultChatFrame
+    local name = opt.chatFrameTabName or def.chatFrameTabName
+    assert(name, 'Chat frame name is required')
 
-        --- @see Interface/FrameXML/ChatFrame.lua
-        --- @type ChatLogFrame
-        local chatFrame = FCF_OpenTemporaryWindow('CHANNEL20', 'player', nil, true)
-        if not chatFrame then print(addon, c4('Failed to create temporary chat frame.')) return end
+    --- @see Interface/FrameXML/ChatFrame.lua
+    --- @type ChatLogFrame
+    local chatFrame = FCF_OpenTemporaryWindow('CHANNEL20', 'player', nil, true)
+    if not chatFrame then print(addon, c4('Failed to create temporary chat frame.')) return end
 
-        FCF_SetWindowName(chatFrame, opt.chatFrameTabName)
+    FCF_SetWindowName(chatFrame, opt.chatFrameTabName)
 
-        chatFrame.options = opt
-        Mixin(chatFrame, ChatLogFrameMixin)
+    chatFrame.options = opt
+    Mixin(chatFrame, ChatLogFrameMixin)
 
-        local maxLines = opt.maxLines or def.maxLines
-        local font = opt.font or def.font
-        local f, size, flags = font:GetFont()
-        if opt.fontSize then size = opt.fontSize end
-        chatFrame:SetFont(f, size, flags)
-        chatFrame:SetMaxLines(maxLines)
+    local maxLines = opt.maxLines or def.maxLines
+    local font = opt.font or def.font
+    local f, size, flags = font:GetFont()
+    if opt.fontSize then size = opt.fontSize end
+    chatFrame:SetFont(f, size, flags)
+    chatFrame:SetMaxLines(maxLines)
 
-        if ns.gameVersion == 'classic' then
-            chatFrame:SetScript("OnMouseWheel", function(self, delta)
+    if ns.gameVersion == 'classic' then
+        chatFrame:SetScript("OnMouseWheel", function(self, delta)
+            if delta > 0 then self:ScrollUp() else self:ScrollDown() end
+        end)
+        if DEFAULT_CHAT_FRAME then
+            DEFAULT_CHAT_FRAME:SetScript("OnMouseWheel", function(self, delta)
                 if delta > 0 then self:ScrollUp() else self:ScrollDown() end
             end)
         end
-
-        -- Hook into the dropdown menu
-        --- @param frame ChatFrame
-        hooksecurefunc("UIDropDownMenu_Initialize", function(frame)
-            -- this prevents the menu item from being added to "Font Size" menu level 2
-            if UIDROPDOWNMENU_MENU_LEVEL ~= 1 then return end
-            if not chatFrame:IsEqualToTabDropdownName(frame:GetName()) then return end
-
-            AddClearConsoleMenu(chatFrame)
-        end)
-
-        -- other settings:
-        -- shadow offset
-        -- chatFrame:GetFontObject():SetShadowOffset(1.5, -1)
-
-        chatFrame:SetAsDefaultChatFrameIfConfigured()
-        if callbackFn then callbackFn(chatFrame) end
-
-        C_Timer.After(1, function()
-            FCF_StopAlertFlash(chatFrame)
-        end)
-
-        return chatFrame
     end
 
-    --- @return string The addon version string. Example: 2024.3.1
-    function o:GetVersion()
-        local versionText = GetAddOnMetadata(addon, 'Version')
-        --@do-not-package@
-        if ns.debug:IsDeveloper() then
-            versionText = '1.0.0.dev'
-        end
-        --@end-do-not-package@
-        return versionText
+    -- Hook into the dropdown menu
+    --- @param frame ChatFrame
+    hooksecurefunc("UIDropDownMenu_Initialize", function(frame)
+        -- this prevents the menu item from being added to "Font Size" menu level 2
+        if UIDROPDOWNMENU_MENU_LEVEL ~= 1 then return end
+        if not chatFrame:IsEqualToTabDropdownName(frame:GetName()) then return end
+
+        AddClearConsoleMenu(chatFrame)
+    end)
+
+    -- other settings:
+    -- shadow offset
+    -- chatFrame:GetFontObject():SetShadowOffset(1.5, -1)
+
+    chatFrame:SetAsDefaultChatFrameIfConfigured()
+    if callbackFn then callbackFn(chatFrame) end
+
+    C_Timer.After(1, function()
+        FCF_StopAlertFlash(chatFrame)
+    end)
+
+    return chatFrame
+end
+
+--- @param chatFrame ChatFrame
+--- @return ChatFrameTab
+function o:GetChatFrameTab(chatFrame) return chatFrame and _G[chatFrame:GetName() .. "Tab"] end
+
+--- @param chatFrame ChatFrame
+function o:GetChatFrameTabText(chatFrame)
+    assert(chatFrame, 'ChatFrame object is required.')
+    local tabFrame = self:GetChatFrameTab(chatFrame)
+    return sformat('%s [%s]', tabFrame:GetText(), chatFrame:GetName())
+end
+
+--- @return string The addon version string. Example: 2024.3.1
+function o:GetVersion()
+    local versionText = GetAddOnMetadata(addon, 'Version')
+    --@do-not-package@
+    if ns.debug:IsDeveloper() then
+        versionText = '1.0.0.dev'
     end
+    --@end-do-not-package@
+    return versionText
+end
 
-    --- @return string The time in ISO Date Format. Example: 2024-03-22T17:34:00Z
-    function o:GetLastUpdate()
-        local lastUpdate = GetAddOnMetadata(addon, GITHUB_LAST_CHANGED_DATE)
-        --@do-not-package@
-        if ns.debug:IsDeveloper() then
-            lastUpdate = ns:KO().TimeUtil:TimeToISODate()
-        end
-        --@end-do-not-package@
-        return lastUpdate
+--- @return string The time in ISO Date Format. Example: 2024-03-22T17:34:00Z
+function o:GetLastUpdate()
+    local lastUpdate = GetAddOnMetadata(addon, GITHUB_LAST_CHANGED_DATE)
+    --@do-not-package@
+    if ns.debug:IsDeveloper() then
+        lastUpdate = ns:KO().TimeUtil:TimeToISODate()
     end
+    --@end-do-not-package@
+    return lastUpdate
+end
 
-    ---#### Example
-    ---```
-    ---local version, curseForge, issues, repo, lastUpdate, useKeyDown, wowInterfaceVersion = GC:GetAddonInfo()
-    ---```
-    --- /dump DebugChatFrame:GetAddonInfo()
-    --- @return string, string, string, string, string, string, string
-    function o:GetAddonInfo()
-        local lastUpdate = self:GetLastUpdate()
-        local versionText = self:GetVersion()
-        local wowInterfaceVersion = select(4, GetBuildInfo())
+---#### Example
+---```
+---local version, curseForge, issues, repo, lastUpdate, useKeyDown, wowInterfaceVersion = GC:GetAddonInfo()
+---```
+--- /dump DebugChatFrame:GetAddonInfo()
+--- @return string, string, string, string, string, string, string
+function o:GetAddonInfo()
+    local lastUpdate = self:GetLastUpdate()
+    local versionText = self:GetVersion()
+    local wowInterfaceVersion = select(4, GetBuildInfo())
 
-        return versionText, GetAddOnMetadata(addon, CURSE_FORGE), GetAddOnMetadata(addon, GITHUB_ISSUES),
-                GetAddOnMetadata(addon, GITHUB_REPO), lastUpdate, wowInterfaceVersion
-    end
+    return versionText, GetAddOnMetadata(addon, CURSE_FORGE), GetAddOnMetadata(addon, GITHUB_ISSUES),
+            GetAddOnMetadata(addon, GITHUB_REPO), lastUpdate, wowInterfaceVersion
+end
 
-    --- /run print(DebugChatFrame:GetAddonInfoFormatted())
-    --- @return string
-    function o:GetAddonInfoFormatted()
-        local version, curseForge, issues, repo, lastUpdate, wowInterfaceVersion = self:GetAddonInfo()
-        local fmt = '%s|cfdeab676: %s|r'
-        return sformat("%s:\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
-                       'Addon Info',
-                       sformat(fmt, 'Version', version),
-                       sformat(fmt, 'Curse-Forge', curseForge),
-                       sformat(fmt, 'Bugs', issues),
-                       sformat(fmt, 'Repo', repo),
-                       sformat(fmt, 'Last-Update', lastUpdate),
-                       sformat(fmt, 'Interface-Version', wowInterfaceVersion),
-                       sformat(fmt, 'Game-Version', ns.gameVersion)
-        )
-    end
+--- /run print(DebugChatFrame:GetAddonInfoFormatted())
+--- @return string
+function o:GetAddonInfoFormatted()
+    local version, curseForge, issues, repo, lastUpdate, wowInterfaceVersion = self:GetAddonInfo()
+    local fmt = '%s|cfdeab676: %s|r'
+    return sformat("%s:\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
+                   'Addon Info',
+                   sformat(fmt, 'Version', version),
+                   sformat(fmt, 'Game-Version', ns.gameVersion),
+                   sformat(fmt, 'Curse-Forge', curseForge),
+                   sformat(fmt, 'Bugs', issues),
+                   sformat(fmt, 'Repo', repo),
+                   sformat(fmt, 'Last-Update', lastUpdate),
+                   sformat(fmt, 'Interface-Version', wowInterfaceVersion))
+end
 
-    --- /run DebugChatFrame:Info()
-    function o:Info() print(self:GetAddonInfoFormatted()) end
+--- /run DebugChatFrame:Info()
+function o:Info() print(self:GetAddonInfoFormatted()) end
 
-end; PropsAndMethods(L)
 
 --@do-not-package@
 if not ns.debug:CreateTestChatFrame() then return end

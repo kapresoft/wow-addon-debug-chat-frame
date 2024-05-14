@@ -8,6 +8,18 @@ manual-changelog:
   filename: CHANGELOG.txt
   markup-type: markdown
 
+required-dependencies:
+  - Ace3
+
+embedded-libraries:
+  - LibStub
+
+tools-used:
+  - AddonUsage
+  - DevSuite
+  - BugSack
+  - !BugGrabber
+
 # Resources:
 #  - https://github.com/wowace-mirror
 #  - https://www.wowace.com/projects/ace3
