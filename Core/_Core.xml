@@ -5,6 +5,7 @@
 
     <Script file="Core.lua"/>
     <Include file="Fonts\_Fonts.xml" />
+    <Include file="Lib\_Lib.xml" />
     <!--@do-not-package@-->
     <Include file="Developer\_DeveloperSetup.xml"/>
     <!--@end-do-not-package@-->

@@ -1,7 +1,7 @@
 ## Interface: 40400
 ## Version: @project-version@
-## Title: Lib: |cff1784d1DebugChatFrame|r Cataclysm
-## Notes: A debug chat frame for development. |cff1784d1This addon is provided 'as is' without any warranties. All rights reserved. Redistribution or modification is not permitted.|r
+## Title: |TInterface/Addons/DebugChatFrame/Core/Assets/logo-v3:18:18|t Lib: |cff1784d1DebugChatFrame|r Cataclysm
+## Notes: A debug chat frame console for development.
 ## Author: kapresoft@gmail.com
 ## DefaultState: enabled
 ## SavedVariables: DEBUG_CHAT_FRAME_PLUS_DB, DEBUG_CHAT_FRAME_LOG_LEVEL

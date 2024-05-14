@@ -1,11 +1,12 @@
 ## Interface: 100206
 ## Version: @project-version@
 ## Title: Lib: |cff1784d1DebugChatFrame|r
-## Notes: A debug chat frame for development. |cff1784d1This addon is provided 'as is' without any warranties. All rights reserved. Redistribution or modification is not permitted.|r
+## Notes: A debug chat frame console for development.
 ## Author: kapresoft@gmail.com
 ## DefaultState: enabled
 ## SavedVariables: DEBUG_CHAT_FRAME_PLUS_DB, DEBUG_CHAT_FRAME_LOG_LEVEL
 ## LoadOnDemand: 1
+## IconTexture: Interface/AddOns/DebugChatFrame/Core/Assets/DebugChatFrame-v1
 
 ## X-Min-Interface: 11401
 ## X-Credits: kapresoft@gmail.com
