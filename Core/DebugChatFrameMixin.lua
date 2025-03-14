@@ -230,7 +230,10 @@ function o:New(opt, callbackFn)
     local chatFrame = FCF_OpenTemporaryWindow('CHANNEL20', 'player', nil, true)
     if not chatFrame then print(addon, c4('Failed to create temporary chat frame.')) return end
 
-    FCF_SetWindowName(chatFrame, opt.chatFrameTabName)
+    --This no longer works for setting tab name
+    --FCF_SetWindowName(chatFrame, opt.chatFrameTabName)
+
+    _G[chatFrame:GetName() .. 'Tab'].Text:SetText(opt.chatFrameTabName)
 
     chatFrame.options = opt
     Mixin(chatFrame, ChatLogFrameMixin)
@@ -285,7 +288,8 @@ function o:GetChatFrameTab(chatFrame) return chatFrame and _G[chatFrame:GetName(
 function o:GetChatFrameTabText(chatFrame)
     assert(chatFrame, 'ChatFrame object is required.')
     local tabFrame = self:GetChatFrameTab(chatFrame)
-    return sformat('%s [%s]', tabFrame:GetText(), chatFrame:GetName())
+    local tabFrameText = tabFrame:GetText() or ''
+    return sformat('%s [%s]', tabFrameText, chatFrame:GetName())
 end
 
 --- @return string The addon version string. Example: 2024.3.1

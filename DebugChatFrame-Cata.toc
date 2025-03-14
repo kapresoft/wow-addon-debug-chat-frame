@@ -1,4 +1,4 @@
-## Interface: 40400
+## Interface: 40402
 ## Version: @project-version@
 ## Title: |TInterface/Addons/DebugChatFrame/Core/Assets/logo-v3:18:18|t Lib: |cff1784d1DebugChatFrame|r Cataclysm
 ## Notes: A debug chat frame console for development.
