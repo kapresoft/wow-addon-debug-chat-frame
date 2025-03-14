@@ -1,6 +1,6 @@
 # DebugChatFrame: A Developer's Tool for WoW Addon Development
 
-[Releases](https://github.com/kapresoft/wow-addon-debug-chat-frame/releases) | [Milestones](https://github.com/kapresoft/wow-addon-debug-chat-frame/milestones) | [Known Issues](https://github.com/kapresoft/wow-addon-debug-chat-frame/issues) | [Curse Forge](https://legacy.curseforge.com/wow/addons/actionbarplus/files)
+[Releases](https://github.com/kapresoft/wow-addon-debug-chat-frame/releases) | [Milestones](https://github.com/kapresoft/wow-addon-debug-chat-frame/milestones) | [Known Issues](https://github.com/kapresoft/wow-addon-debug-chat-frame/issues) | [Curse Forge](https://curseforge.com/wow/addons/DebugChatFrame/files)
 
 DebugChatFrame is a highly efficient library addon specifically designed to facilitate World of Warcraft addon developers by providing a dedicated and temporary chat frame for debugging. This tool is load-on-demand, ensuring minimal resource usage until it's explicitly needed.
 
