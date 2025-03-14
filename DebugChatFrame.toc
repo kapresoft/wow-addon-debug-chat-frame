@@ -1,4 +1,4 @@
-## Interface: 100206
+## Interface: 110100
 ## Version: @project-version@
 ## Title: Lib: |cff1784d1DebugChatFrame|r
 ## Notes: A debug chat frame console for development.
