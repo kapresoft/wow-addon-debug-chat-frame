@@ -1,16 +1,17 @@
-## Interface: 110105
+## Interface: 110107
 ## Version: @project-version@
-## Title: Lib: |cff1784d1DebugChatFrame|r
+## Title: Lib: Debug|cff12E600Chat|rFrame Retail
 ## Notes: A debug chat frame console for development.
 ## Author: kapresoft@gmail.com
 ## DefaultState: enabled
 ## SavedVariables: DEBUG_CHAT_FRAME_PLUS_DB, DEBUG_CHAT_FRAME_LOG_LEVEL
 ## LoadOnDemand: 1
 ## IconTexture: Interface/AddOns/DebugChatFrame/Core/Assets/DebugChatFrame-v1
+## Category-enUS: Libraries
 
 ## X-Min-Interface: 11401
 ## X-Credits: kapresoft@gmail.com
-## X-Category: Library
+## X-Category: Libraries
 ## X-License: This addon is provided 'as is' without any warranties. All rights reserved. Redistribution or modification is not permitted.
 
 ## X-Github-Repo: https://github.com/kapresoft/wow-addon-debug-chat-frame

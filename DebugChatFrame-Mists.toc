@@ -1,15 +1,14 @@
-## Interface: 11507
+## Interface: 50500
 ## Version: @project-version@
-## Title: |TInterface/Addons/DebugChatFrame/Core/Assets/logo-v3:18:18|t Lib: Debug|cff12E600Chat|rFrame Classic
-## Notes: A debug chat frame for development. |cff1784d1This addon is provided 'as is' without any warranties. All rights reserved. Redistribution or modification is not permitted.|r
-
+## Title: |TInterface/Addons/DebugChatFrame/Core/Assets/logo-v3:18:18|t Lib: Debug|cff12E600Chat|rFrame MoP
+## Notes: A debug chat frame console for development.
 ## Author: kapresoft@gmail.com
 ## DefaultState: enabled
 ## SavedVariables: DEBUG_CHAT_FRAME_PLUS_DB, DEBUG_CHAT_FRAME_LOG_LEVEL
 ## LoadOnDemand: 1
 ## Category-enUS: Libraries
 
-## X-Min-Interface: 11401
+## X-Min-Interface: 50500
 ## X-Credits: kapresoft@gmail.com
 ## X-Category: Libraries
 ## X-License: This addon is provided 'as is' without any warranties. All rights reserved. Redistribution or modification is not permitted.
@@ -31,6 +30,5 @@
 # To get the Interface/Build Info
 # /dump select(4, GetBuildInfo())
 
-Core\Vanilla.lua
+Core\Mists.lua
 Core\_Core.xml
-
