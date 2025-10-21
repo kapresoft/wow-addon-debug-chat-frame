@@ -1,4 +1,4 @@
-## Interface: 110107
+## Interface: 110205
 ## Version: @project-version@
 ## Title: Lib: Debug|cff12E600Chat|rFrame Retail
 ## Notes: A debug chat frame console for development.

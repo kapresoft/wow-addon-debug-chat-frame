@@ -1,4 +1,4 @@
-## Interface: 50500
+## Interface: 50501
 ## Version: @project-version@
 ## Title: |TInterface/Addons/DebugChatFrame/Core/Assets/logo-v3:18:18|t Lib: Debug|cff12E600Chat|rFrame MoP
 ## Notes: A debug chat frame console for development.
