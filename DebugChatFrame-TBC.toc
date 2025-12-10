@@ -42,6 +42,6 @@
 # To get the Interface/Build Info
 # /dump select(4, GetBuildInfo())
 
-Core\Vanilla.lua
+Core\TBC.lua
 Core\_Core.xml
 
