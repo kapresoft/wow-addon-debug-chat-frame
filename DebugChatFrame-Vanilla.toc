@@ -1,13 +1,24 @@
 ## Interface: 11508
 ## Version: @project-version@
 ## Title: |TInterface/Addons/DebugChatFrame/Core/Assets/logo-v3:18:18|t Lib: Debug|cff12E600Chat|rFrame Classic
-## Notes: A debug chat frame for development. |cff1784d1This addon is provided 'as is' without any warranties. All rights reserved. Redistribution or modification is not permitted.|r
+## Notes: A debug chat frame f## Notes: A debug chat frame for development. |cff1784d1This addon is provided 'as is' without any warranties. All rights reserved. Redistribution or modification is not permitted.|r
 
-## Author: kapresoft@gmail.com
+## Author: Antonio W. Lagnada (kapresoft@gmail.com)
 ## DefaultState: enabled
 ## SavedVariables: DEBUG_CHAT_FRAME_PLUS_DB, DEBUG_CHAT_FRAME_LOG_LEVEL
 ## LoadOnDemand: 1
+
 ## Category-enUS: Libraries
+## Category-deDE: Bibliotheken
+## Category-esES: Bibliotecas
+## Category-esMX: Bibliotecas
+## Category-frFR: Bibliothèques
+## Category-itIT: Librerie
+## Category-koKR: 라이브러리
+## Category-ptBR: Bibliotecas
+## Category-ruRU: Библиотеки
+## Category-zhCN: 库
+## Category-zhTW: 程式庫
 
 ## X-Min-Interface: 11401
 ## X-Credits: kapresoft@gmail.com
