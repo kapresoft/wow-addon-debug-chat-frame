@@ -1,6 +1,6 @@
-## Interface: 40402
+## Interface: 20505
 ## Version: @project-version@
-## Title: |TInterface/Addons/DebugChatFrame/Core/Assets/logo-v3:18:18|t Lib: Debug|cff12E600Chat|rFrame Cataclysm
+## Title: |TInterface/Addons/DebugChatFrame/Core/Assets/logo-v3:18:18|t Lib: Debug|cff12E600Chat|rFrame TBC
 ## Notes: A debug chat frame for development. |cff1784d1This addon is provided 'as is' without any warranties. All rights reserved. Redistribution or modification is not permitted.|r
 
 ## Author: Antonio W. Lagnada (kapresoft@gmail.com)
@@ -42,5 +42,6 @@
 # To get the Interface/Build Info
 # /dump select(4, GetBuildInfo())
 
-Core\Wrath.lua
+Core\Vanilla.lua
 Core\_Core.xml
+
