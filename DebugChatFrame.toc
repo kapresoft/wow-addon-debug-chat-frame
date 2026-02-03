@@ -1,6 +1,6 @@
-## Interface: 110207
+## Interface: 120000
 ## Version: @project-version@
-## Title: Lib: Debug|cff12E600Chat|rFrame
+## Title: Debug|cff12E600Chat|rFrame
 ## IconTexture: Interface/AddOns/DebugChatFrame/Core/Assets/logo-v3
 
 ## Author: Antonio W. Lagnada (kapresoft@gmail.com)
