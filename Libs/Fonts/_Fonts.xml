@@ -3,7 +3,7 @@
 
 	<FontFamily name="DCF_ConsoleMonoCondensedSemiBold" virtual="true">
 		<Member alphabet="roman">
-			<Font font="Interface\AddOns\DebugChatFrame\Core\Fonts\Inconsolata_Condensed-SemiBold.ttf"
+			<Font font="Interface\AddOns\DebugChatFrame\Libs\Fonts\Inconsolata_Condensed-SemiBold.ttf"
 				  height="14">
 			</Font>
 		</Member>
@@ -23,7 +23,7 @@
 
 	<FontFamily name="DCF_ConsoleMonoCondensedSemiBoldOutline" virtual="true">
 		<Member alphabet="roman">
-			<Font font="Interface\AddOns\DebugChatFrame\Core\Fonts\Inconsolata_Condensed-SemiBold.ttf"
+			<Font font="Interface\AddOns\DebugChatFrame\Libs\Fonts\Inconsolata_Condensed-SemiBold.ttf"
 				  height="14" outline="Normal">
 			</Font>
 		</Member>
@@ -43,7 +43,7 @@
 
 	<FontFamily name="DCF_ConsoleMonoSemiCondensedBlack" virtual="true">
 		<Member alphabet="roman">
-			<Font font="Interface\AddOns\DebugChatFrame\Core\Fonts\Inconsolata_SemiCondensed-Black.ttf"
+			<Font font="Interface\AddOns\DebugChatFrame\Libs\Fonts\Inconsolata_SemiCondensed-Black.ttf"
 				  height="14">
 			</Font>
 		</Member>
@@ -63,7 +63,7 @@
 
 	<FontFamily name="DCF_ConsoleMonoSemiCondensedBlackOutline" virtual="true">
 		<Member alphabet="roman">
-			<Font font="Interface\AddOns\DebugChatFrame\Core\Fonts\Inconsolata_SemiCondensed-Black.ttf"
+			<Font font="Interface\AddOns\DebugChatFrame\Libs\Fonts\Inconsolata_SemiCondensed-Black.ttf"
 				  height="14" outline="NORMAL">
 			</Font>
 		</Member>
