@@ -39,9 +39,6 @@
 ## X-PayPal-Donation-ID: AX58YP3GSGXVU
 ## X-PayPal-Donation-URL: https://www.paypal.com/donate/?hosted_button_id=AX58YP3GSGXVU
 
-# To get the Interface/Build Info
-# /dump select(4, GetBuildInfo())
-
-Core\TBC.lua
-Core\_Core.xml
-
+ThirdParty\ThirdParty.xml
+Libs\TBC.lua
+Libs\_Core.xml
