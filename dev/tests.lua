@@ -6,9 +6,10 @@ local x = {
   end,
   -- PreReq: Temporarily set LoadOnDemand: 0
   function()
+    -- returns a global 'cf' for chatFrame instance
     -- /run
     (function()
-      local dcf = DebugChatFrame; local opt = { chatFrameTabName = 'Test'}; DebugChatFrame:New(opt, function(cf) print('chatFrame:', tostring(cf)) end)
+      local dcf = DebugChatFrame; local opt = { chatFrameTabName = 'Test'}; cf = DebugChatFrame:New(opt, function(cf) print('chatFrame:', tostring(cf)); end)
     end)()
   end
 }

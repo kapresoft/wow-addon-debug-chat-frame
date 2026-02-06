@@ -54,8 +54,8 @@ local function NewFormatterFromColor(color)
     return function(arg) return color:WrapTextInColorCode(tostring(arg)) end
 end
 
----@param name Name
-function GetFrameByName(name)
+--- @param name Name
+local function GetFrameByName(name)
     assert(type(name) == 'string', "ChatFrame string name is required")
     for i = 1, NUM_CHAT_WINDOWS do
         --- @type Frame
