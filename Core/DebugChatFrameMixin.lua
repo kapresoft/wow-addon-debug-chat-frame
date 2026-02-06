@@ -7,11 +7,6 @@ local addon
 local ns
 addon, ns = ...
 
-local K = ns.Kapresoft_LibUtil
-local KO = K.Objects
-local pformat = ns.Kapresoft_LibUtil.pformat
-
-local shallow_copy = KO.Table.shallow_copy
 local sformat, strlower = string.format, string.lower
 
 local GITHUB_LAST_CHANGED_DATE = 'X-Github-Project-Last-Changed-Date'
@@ -44,7 +39,15 @@ local debugConsoleOptionsDefault = {
 --[[-----------------------------------------------------------------------------
 Support Functions
 -------------------------------------------------------------------------------]]
---- @param color Color
+local function shallow_copy(t)
+    local t2 = {}
+    for k,v in pairs(t) do
+        t2[k] = v
+    end
+    return t2
+end
+
+--- @param color ColorMixin
 --- @return fun(arg:any) : string The string wrapped in color code
 local function NewFormatterFromColor(color)
     --- @param arg any

@@ -1,0 +1,52 @@
+# This is used for development to pull external libraries.
+# @see also: ./dev/pull-extlib.sh
+# --------------------------
+# cmd: ./dev/release.sh -duz -r ./.release -m _setup.yml
+# Note: This will build in ./.release/_setup directory
+package-as: _setup
+# --------------------------
+no-changelog: true
+
+# Use github because svn repos are slower
+# basepath is ${package-as}
+externals:
+  ThirdParty-Libs/Ace3: https://github.com/WoWUIDev/Ace3
+  ThirdParty-Libs/Kapresoft-LibUtil: https://github.com/kapresoft/wow-lib-util
+
+ignore:
+  - "*.md"
+  - "*.yaml"
+  - "*.toc"
+  - "*.sh"
+  - "*.txt"
+  - dev
+  - doc
+  - LICENSE
+  - LibIconPicker
+  - ThirdParty-Libs/Ace3/Bindings.xml
+  - ThirdParty-Libs/Ace3/*.txt
+  - ThirdParty-Libs/Ace3/AceAddon-3.0
+  - ThirdParty-Libs/Ace3/AceBucket-3.0
+  - ThirdParty-Libs/Ace3/AceComm-3.0
+  - ThirdParty-Libs/Ace3/AceConfig-3.0
+  - ThirdParty-Libs/Ace3/AceConsole-3.0
+  - ThirdParty-Libs/Ace3/AceDB-3.0
+  - ThirdParty-Libs/Ace3/AceDBOptions-3.0
+  - ThirdParty-Libs/Ace3/AceEvent-3.0
+  - ThirdParty-Libs/Ace3/AceGUI-3.0
+  - ThirdParty-Libs/Ace3/AceHook-3.0
+  - ThirdParty-Libs/Ace3/AceLocale-3.0/AceLocale-3.0.xml
+  - ThirdParty-Libs/Ace3/AceSerializer-3.0
+  - ThirdParty-Libs/Ace3/AceTab-3.0
+  - ThirdParty-Libs/Ace3/AceTimer-3.0
+  - ThirdParty-Libs/Ace3/CallbackHandler-1.0
+  - ThirdParty-Libs/Kapresoft-LibUtil/External
+  - ThirdParty-Libs/Kapresoft-LibUtil/Kapresoft-LibUtil.toc
+  - ThirdParty-Libs/Kapresoft-LibUtil/LICENSE
+  - ThirdParty-Libs/Kapresoft-LibUtil/dev
+  - ThirdParty-Libs/Kapresoft-LibUtil/doc
+
+
+# Base path is .release/
+move-folders:
+  _setup/ThirdParty-Libs: ../ThirdParty/Libs
