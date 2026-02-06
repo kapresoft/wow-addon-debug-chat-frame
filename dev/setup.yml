@@ -22,7 +22,6 @@ ignore:
   - dev
   - doc
   - LICENSE
-  - LibIconPicker
   - ThirdParty-Libs/Ace3/Bindings.xml
   - ThirdParty-Libs/Ace3/*.txt
   - ThirdParty-Libs/Ace3/AceAddon-3.0
