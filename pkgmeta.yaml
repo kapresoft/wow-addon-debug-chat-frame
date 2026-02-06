@@ -2,7 +2,6 @@ package-as: DebugChatFrame
 # --------------------------
 license-output: LICENSE.txt
 enable-nolib-creation: no
-#enable-toc-creation: yes
 
 manual-changelog:
   filename: CHANGELOG.txt
@@ -18,43 +17,42 @@ tools-used:
   - Bugsack
   - Bug-Grabber
 
-# Resources:
-#  - https://github.com/wowace-mirror
-#  - https://www.wowace.com/projects/ace3
-#  - SVN URLs are still the primary source recommendation
 externals:
-  Core/ExtLib/Kapresoft-LibUtil:
-    url: https://github.com/kapresoft/wow-lib-util
-    tag: latest
-  # Sourcing Ace3 addon directly from github
-  # LibStub is included in Ace3 add
-  Core/ExtLib/WowAce/Ace3:
-    url: https://repos.wowace.com/wow/ace3/trunk
-    tag: latest
+  ThirdParty/Libs/Ace3: https://repos.wowace.com/wow/ace3/trunk
+  ThirdParty/Libs/Kapresoft-LibUtil: https://github.com/kapresoft/wow-lib-util
 
 ignore:
   - "*.sh"
   - "*.md"
   - "*.yaml"
   - "*.yml"
+  - "*.txt"
   - dev
   - doc
   - scripts
-  - Core/ExtLib/Kapresoft-LibUtil/LICENSE
-  - Core/ExtLib/Kapresoft-LibUtil/Kapresoft-LibUtil.toc
-  - Core/ExtLib/Kapresoft-LibUtil/External
-  - Core/ExtLib/Kapresoft-LibUtil/dev
-  - Core/ExtLib/Kapresoft-LibUtil/sync-extlibs.sh
-  - Core/ExtLib/WowAce/LibQTip/LibQTip-1.0/LibStub
-  - Core/ExtLib/WowAce/LibQTip/LibQTip-1.0/LibQTip-1.0.toc
-  - Core/ExtLib/WowAce/LibCompress/LibCompress/LibCompress.toc
-  - Core/ExtLib/WowAce/Ace3/tests
-  - Core/ExtLib/WowAce/Ace3/Ace3.lua
-  - Core/ExtLib/WowAce/Ace3/Ace3.toc
-  - Core/ExtLib/WowAce/Ace3/Ace3_TBC.toc
-  - Core/ExtLib/WowAce/Ace3/Ace3_Vanilla.toc
-  - Core/ExtLib/WowAce/Ace3/Ace3_Wrath.toc
-  - Core/ExtLib/WowAce/Ace3/Bindings.xml
-  - Core/ExtLib/WowAce/Ace3/Bindings.xml
-  - Core/Lib/Developer
-  - Dev.toc
+  - Libs/Developer
+  - ThirdParty/Libs/Ace3/Ace3.lua
+  - ThirdParty/Libs/Ace3/tests
+  - ThirdParty/Libs/Ace3/Bindings.xml
+  - ThirdParty/Libs/Ace3/AceAddon-3.0
+  - ThirdParty/Libs/Ace3/AceBucket-3.0
+  - ThirdParty/Libs/Ace3/AceComm-3.0
+  - ThirdParty/Libs/Ace3/AceConfig-3.0
+  - ThirdParty/Libs/Ace3/AceConsole-3.0
+  - ThirdParty/Libs/Ace3/AceDB-3.0
+  - ThirdParty/Libs/Ace3/AceDBOptions-3.0
+  - ThirdParty/Libs/Ace3/AceEvent-3.0
+  - ThirdParty/Libs/Ace3/AceGUI-3.0
+  - ThirdParty/Libs/Ace3/AceHook-3.0
+  - ThirdParty/Libs/Ace3/AceLocale-3.0/AceLocale-3.0.xml
+  - ThirdParty/Libs/Ace3/AceSerializer-3.0
+  - ThirdParty/Libs/Ace3/AceTab-3.0
+  - ThirdParty/Libs/Ace3/AceTimer-3.0
+  - ThirdParty/Libs/Ace3/CallbackHandler-1.0
+  - ThirdParty/Libs/Kapresoft-LibUtil/External
+  - ThirdParty/Libs/Kapresoft-LibUtil/LICENSE
+  - ThirdParty/Libs/Kapresoft-LibUtil/dev
+  - ThirdParty/Libs/Kapresoft-LibUtil/doc
+  - ThirdParty/Libs/Kapresoft-LibUtil/External
+  - ThirdParty/Libs/Kapresoft-LibUtil/*.toc
+  - ThirdParty/Libs/Kapresoft-LibUtil/*.sh

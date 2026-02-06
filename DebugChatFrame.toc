@@ -1,7 +1,7 @@
 ## Interface: 120000
 ## Version: @project-version@
 ## Title: Debug|cff12E600Chat|rFrame
-## IconTexture: Interface/AddOns/DebugChatFrame/Core/Assets/logo-v3
+## IconTexture: Interface/AddOns/DebugChatFrame/Libs/Assets/logo-v3
 
 ## Author: Antonio W. Lagnada (kapresoft@gmail.com)
 ## Notes: A debug chat frame for development. |cff1784d1This addon is provided 'as is' without any warranties. All rights reserved. Redistribution or modification is not permitted.|r
