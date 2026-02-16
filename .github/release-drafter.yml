@@ -9,8 +9,10 @@ template: |
   ### DebugChatFrame $RESOLVED_VERSION
   [Release Notes](https://github.com/kapresoft/$REPOSITORY/releases/tag/$RESOLVED_VERSION) | [Full Changelog](https://github.com/kapresoft/$REPOSITORY/compare/$PREVIOUS_TAG...$RESOLVED_VERSION) | [Release Page](https://github.com/kapresoft/$REPOSITORY/releases)
   <br>
+  
   #### What’s Changed
-  $CHANGES
+  $CHANGES  
   <br>
+  
   #### Links:
   - [Curse Forge](https://www.curseforge.com/wow/addons/DebugChatFrame/files)
