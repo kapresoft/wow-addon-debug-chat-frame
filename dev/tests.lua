@@ -1,8 +1,14 @@
 local x = {
   -- manual load
   function()
+    -- /dump C_AddOns.EnableAddOn('DebugChatFrame', UnitName('player'))
     -- /dump EnableAddOn('DebugChatFrame', UnitName('player'))
-    -- /dump LoadAddOn('DebugChatFrame')
+    -- /dump C_AddOns.LoadAddOn('DebugChatFrame')
+    -- /run
+    (function()
+      C_AddOns.LoadAddOn('DebugChatFrame')
+      local c = DebugChatFrame; print("DebugChatFrame=", c, 'info=', c:GetAddonInfo())
+    end)()
   end,
   -- PreReq: Temporarily set LoadOnDemand: 0
   function()

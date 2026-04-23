@@ -7,7 +7,7 @@ package-as: _setup
 # --------------------------
 no-changelog: true
 
-# Use github because svn repos are slower
+# Use GitHub because svn repos are slower
 # basepath is ${package-as}
 externals:
   ThirdParty-Libs/Ace3: https://github.com/WoWUIDev/Ace3

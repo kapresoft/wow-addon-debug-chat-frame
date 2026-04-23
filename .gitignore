@@ -56,3 +56,7 @@ ThirdParty/Libs/
 
 # Ignore Saved Variables folder with symlinks
 /_SV
+
+# Don't save this
+deployer-config.lua
+.emmyrc.json

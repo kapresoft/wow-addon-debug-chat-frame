@@ -2,7 +2,6 @@
 -- This file is not needed to run the addon.
 -- Copy and paste this anywhere in your IDE for Emmy Lua to detect
 
---- @alias ChatLogFrame ChatLogFrameInterface | ChatFrame
 --- @alias ChatFrameTab Button
 
 --- @class DebugChatFrameOptionsInterface
