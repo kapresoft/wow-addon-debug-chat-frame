@@ -7,7 +7,7 @@
 
 ## DefaultState: enabled
 ## SavedVariables: DEBUG_CHAT_FRAME_PLUS_DB, DEBUG_CHAT_FRAME_LOG_LEVEL
-## LoadOnDemand: 0
+## LoadOnDemand: 1
 
 ## Category-enUS: Libraries
 ## Category-deDE: Bibliotheken
