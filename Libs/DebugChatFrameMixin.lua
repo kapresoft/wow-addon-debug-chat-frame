@@ -3,7 +3,7 @@ Local Vars
 -------------------------------------------------------------------------------]]
 --- @type string
 local addon
---- @type Namespace
+--- @type Namespace_DebugChatFrame
 local ns
 addon, ns = ...
 
@@ -15,12 +15,14 @@ local GITHUB_ISSUES = 'X-Github-Issues'
 local CURSE_FORGE = 'X-CurseForge'
 local CLEAR_CONSOLE_MENU_ITEM_ID = "ClearConsoleMenuItemID"
 
+local C_GetAddOnMetadata = C_AddOns and C_AddOns.GetAddOnMetadata or GetAddOnMetadata
+
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
 local libShortName = 'DCF'
 --- @class DebugChatFrame : DebugChatFrameInterface
-local L = {}; DebugChatFrame = L
+local o = {}; DebugChatFrame = o
 
 --- @class DebugChatFrameOptions : DebugChatFrameOptionsInterface
 local debugConsoleOptionsDefault = {
@@ -96,23 +98,24 @@ Methods
 /dump DEFAULT_CHAT_FRAME.name
 /dump ChatFrame1.name
 -------------------------------------------------------------------------------]]
---- @alias ChatLogFrame __ChatLogFrame | ChatLogFrameInterface | ChatFrame
-
---- @class __ChatLogFrame
+--- @class ChatLogFrameMixin : ChatLogFrameInterface, ChatFrame
 --- @field options DebugChatFrameOptions
 local ChatLogFrameMixin = {}
+
+--
+--- @class ChatLogFrame : ChatLogFrameMixin
+--
 
 --[[-----------------------------------------------------------------------------
 Methods: ChatLogFrameMixin
 -------------------------------------------------------------------------------]]
---- @type __ChatLogFrame | ChatLogFrame
 local c = ChatLogFrameMixin
 
 --- @private
 --- @return string
 --- @param module string
 function c:prefix(module)
-    assert(module, 'Module:string is required.')
+    assert(type(module) == 'string', 'prefix(module): {module} should be a string')
     local name = (self.options and self.options.addon) or addon
     local nameColor   = c1(name)
     local moduleColor = c3(module)
@@ -148,7 +151,7 @@ function c:IsTabShown()
 end
 
 function c:StartFlash()
-    if self:IsSelected() then return FCF_StopAlertFlash(self) end
+    if self:IsSelected() then FCF_StopAlertFlash(self); return end
     FCF_StartAlertFlash(self)
 end
 
@@ -159,7 +162,9 @@ function c:GetTabName() return _GetTabName(self:GetTab()) end
 function c:GetTab() return _G[self:GetName() .. "Tab"] end
 
 function c:SelectInDock() FCF_SelectDockFrame(self) end
-function c:SelectDefaultChatFrame() return ChatFrame1 and FCF_SelectDockFrame(ChatFrame1) end
+function c:SelectDefaultChatFrame()
+  if ChatFrame1 then FCF_SelectDockFrame(ChatFrame1) end
+end
 
 --- @param selectDebugFrameInDock boolean
 function c:InitialTabSelection(selectDebugFrameInDock)
@@ -216,8 +221,6 @@ end
 --[[-----------------------------------------------------------------------------
 Methods: DebugChatFrame
 -------------------------------------------------------------------------------]]
---- @type DebugChatFrame
-local o = L
 
 --- @param opt DebugChatFrameOptions
 --- @param callbackFn fun(chatFrame:ChatLogFrame) | "function(chatFrame) end" | "Set additional settings in the callbackFn"
@@ -226,7 +229,7 @@ function o:New(opt, callbackFn)
     opt = opt or def
     opt.makeDefaultChatFrame = opt.makeDefaultChatFrame ~= nil or def.makeDefaultChatFrame
     local name = opt.chatFrameTabName or def.chatFrameTabName
-    assert(name, 'Chat frame name is required')
+    assert(type(name) == 'string', 'Chat frame name is required')
 
     --- @see Interface/FrameXML/ChatFrame.lua
     --- @type ChatLogFrame
@@ -289,7 +292,7 @@ function o:GetChatFrameTab(chatFrame) return chatFrame and _G[chatFrame:GetName(
 
 --- @param chatFrame ChatFrame
 function o:GetChatFrameTabText(chatFrame)
-    assert(chatFrame, 'ChatFrame object is required.')
+    assert(chatFrame ~= nil, 'GetChatFrameTabText(chatFrame): {chatFrame} is required')
     local tabFrame = self:GetChatFrameTab(chatFrame)
     local tabFrameText = tabFrame:GetText() or ''
     return sformat('%s [%s]', tabFrameText, chatFrame:GetName())
@@ -297,7 +300,7 @@ end
 
 --- @return string The addon version string. Example: 2024.3.1
 function o:GetVersion()
-    local versionText = GetAddOnMetadata(addon, 'Version')
+    local versionText = C_GetAddOnMetadata(addon, 'Version')
     --@do-not-package@
     if ns.debug:IsDeveloper() then
         versionText = '1.0.0.dev'
@@ -308,7 +311,7 @@ end
 
 --- @return string The time in ISO Date Format. Example: 2024-03-22T17:34:00Z
 function o:GetLastUpdate()
-    local lastUpdate = GetAddOnMetadata(addon, GITHUB_LAST_CHANGED_DATE)
+    local lastUpdate = C_GetAddOnMetadata(addon, GITHUB_LAST_CHANGED_DATE)
     --@do-not-package@
     if ns.debug:IsDeveloper() then
         lastUpdate = ns:KO().TimeUtil:TimeToISODate()
@@ -322,14 +325,14 @@ end
 ---local version, curseForge, issues, repo, lastUpdate, useKeyDown, wowInterfaceVersion = GC:GetAddonInfo()
 ---```
 --- /dump DebugChatFrame:GetAddonInfo()
---- @return string, string, string, string, string, string, string
+--- @return string, string, string, string, string, number
 function o:GetAddonInfo()
     local lastUpdate = self:GetLastUpdate()
     local versionText = self:GetVersion()
     local wowInterfaceVersion = select(4, GetBuildInfo())
 
-    return versionText, GetAddOnMetadata(addon, CURSE_FORGE), GetAddOnMetadata(addon, GITHUB_ISSUES),
-            GetAddOnMetadata(addon, GITHUB_REPO), lastUpdate, wowInterfaceVersion
+    return versionText, C_GetAddOnMetadata(addon, CURSE_FORGE), C_GetAddOnMetadata(addon, GITHUB_ISSUES),
+            C_GetAddOnMetadata(addon, GITHUB_REPO), lastUpdate, wowInterfaceVersion
 end
 
 --- /run print(DebugChatFrame:GetAddonInfoFormatted())
@@ -359,7 +362,7 @@ if not ns.debug:CreateTestChatFrame() then return end
 local opt = shallow_copy(debugConsoleOptionsDefault)
 opt.fontSize = 16
 opt.maxLines = 100
-L:New(opt, function(chatFrame)
+o:New(opt, function(chatFrame)
     ns.chatFrame = chatFrame
     ns:log(libShortName, 'chatFrame:', chatFrame:GetName())
     ns:log(libShortName, 'options:', {1, 2, 3})

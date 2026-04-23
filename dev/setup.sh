@@ -5,9 +5,14 @@ RELEASE_SCRIPT=./dev/release.sh
 TOC_FILE="setup.toc"
 PKGMETA_FILE="setup.yml"
 
-p() {
-  printf "%-9s: %-40s\n" "$1" "$2"
+ts() {
+  date '+[%Y-%m-%d %H:%M:%S]'
 }
+
+p() {
+  printf '%s %5s: %s\n' "$(ts)" "$1" "$2"
+}
+
 ensure_dir() {
   local dir="$1"
 
@@ -42,16 +47,19 @@ _Release() {
     }
     cp ./dev/${TOC_FILE} _${TOC_FILE}
 
-    local args="-duz -r ${BUILD_DIR} -m _${PKGMETA_FILE}"
+    local args="-dz -r ${BUILD_DIR} -m _${PKGMETA_FILE}"
     local cmd="${RELEASE_SCRIPT} ${args}"
-    echo "Executing: ${cmd}"
-    (eval "${cmd}" && echo "Execution Complete: ${cmd}") || {
-      echo "Run failed."
+    p INFO "Executing: ${cmd}"
+    (eval "${cmd}" && p INFO "Execution Complete: ${cmd}") || {
+      p ERROR "Run failed."
       return 1
     }
-    echo "Cleaning up..." && {
+    sleep 1 && p INFO "Cleaning up..." && {
       rm _${PKGMETA_FILE}
       rm _${TOC_FILE}
+      rm -f "${BUILD_DIR}/_setup/CHANGELOG.md" \
+        && sleep 0.5 \
+        && rmdir "${BUILD_DIR}/_setup"
     }
 }
 

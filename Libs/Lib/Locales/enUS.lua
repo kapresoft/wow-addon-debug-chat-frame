@@ -4,7 +4,7 @@
     The contents of this file will be generated automatically.
     
 ]]--
---- @type Namespace
+--- @type Namespace_DebugChatFrame
 local ns = select(2, ...)
 
 local silent = true

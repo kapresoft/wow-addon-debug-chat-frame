@@ -1,4 +1,4 @@
---- @type Namespace
+--- @type Namespace_DebugChatFrame
 local ns = select(2, ...)
 local flag = ns.debug.flag
 flag.developer = true
