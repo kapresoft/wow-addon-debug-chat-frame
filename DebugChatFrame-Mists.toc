@@ -1,4 +1,4 @@
-## Interface: 50503
+## Interface: 50504
 ## Version: @project-version@
 ## Title: |TInterface/Addons/DebugChatFrame/Libs/Assets/logo-v3:18:18|t Lib: Debug|cff12E600Chat|rFrame
 
