@@ -1,4 +1,4 @@
-## Interface: 20505
+## Interface: 20506
 ## Version: @project-version@
 ## Title: Debug|cff12E600Chat|rFrame
 ## IconTexture: Interface/AddOns/DebugChatFrame/Libs/Assets/logo-v3
