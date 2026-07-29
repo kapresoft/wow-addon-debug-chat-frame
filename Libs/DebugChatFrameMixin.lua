@@ -357,18 +357,9 @@ local opt = shallow_copy(debugConsoleOptionsDefault)
 opt.fontSize = 16
 opt.maxLines = 100
 o:New(opt, function(chatFrame)
-  ns:log('hello xxx')
   ns.chatFrame = chatFrame
   ns:log(libShortName, 'chatFrame:', chatFrame:GetName())
   ns:log(libShortName, 'options:', {1, 2, 3})
   ns:log(libShortName, 'tab-name:', chatFrame:GetTabName())
-
 end)
 --@end-do-not-package@
-
-
-C_Timer.After(2, function()
-  tr('hello')
-  print('xxxx hi')
-  print(dcfmt('xx hello'))
-end)
