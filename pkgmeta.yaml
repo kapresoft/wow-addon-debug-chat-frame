@@ -9,15 +9,16 @@ manual-changelog:
 
 embedded-libraries:
   - LibStub
+  - LibPrettyPrint
   - Ace3
 
 tools-used:
   - DevSuite
-  - Addon-Usage
   - Bugsack
   - Bug-Grabber
 
 externals:
+  ThirdParty/Libs/LibPrettyPrint: https://github.com/kapresoft/wow-addon-LibPrettyPrint
   ThirdParty/Libs/Ace3: https://repos.wowace.com/wow/ace3/trunk
   ThirdParty/Libs/Kapresoft-LibUtil: https://github.com/kapresoft/wow-lib-util
 
@@ -31,6 +32,14 @@ ignore:
   - doc
   - scripts
   - Libs/Developer
+  - ThirdParty/Libs/LibPrettyPrint/dev
+  - ThirdParty/Libs/LibPrettyPrint/doc
+  - ThirdParty/Libs/LibPrettyPrint/*.toc
+  - ThirdParty/Libs/LibPrettyPrint/LICENSE
+  - ThirdParty/Libs/LibPrettyPrint/LibPrettyPrint.xml
+  - ThirdParty/Libs/LibPrettyPrint/Assets
+  - ThirdParty/Libs/LibPrettyPrint/ThirdParty
+  - ThirdParty/Libs/LibPrettyPrint/Libs/Developer
   - ThirdParty/Libs/Ace3/Ace3.lua
   - ThirdParty/Libs/Ace3/tests
   - ThirdParty/Libs/Ace3/Bindings.xml
@@ -49,10 +58,23 @@ ignore:
   - ThirdParty/Libs/Ace3/AceTab-3.0
   - ThirdParty/Libs/Ace3/AceTimer-3.0
   - ThirdParty/Libs/Ace3/CallbackHandler-1.0
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib
   - ThirdParty/Libs/Kapresoft-LibUtil/External
   - ThirdParty/Libs/Kapresoft-LibUtil/LICENSE
   - ThirdParty/Libs/Kapresoft-LibUtil/dev
   - ThirdParty/Libs/Kapresoft-LibUtil/doc
-  - ThirdParty/Libs/Kapresoft-LibUtil/External
+  - ThirdParty/Libs/Kapresoft-LibUtil/_Lib.xml
   - ThirdParty/Libs/Kapresoft-LibUtil/*.toc
   - ThirdParty/Libs/Kapresoft-LibUtil/*.sh
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/AceConfigUtil.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/AceLib.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/AceLocaleUtil.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/AddonInfoUtil.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/AddonUtil.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/ConsoleHelperMixin.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/DebugChatFrameMixin.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/LuaEvaluator.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/ModuleUtil.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/SequenceMixin.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/String.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Table.lua
