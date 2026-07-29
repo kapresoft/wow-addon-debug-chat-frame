@@ -10,6 +10,7 @@ no-changelog: true
 # Use github because svn repos are slower
 # basepath is ${package-as}
 externals:
+  ThirdParty-Libs/LibPrettyPrint: https://github.com/kapresoft/wow-addon-LibPrettyPrint
   ThirdParty-Libs/Ace3: https://github.com/WoWUIDev/Ace3
   ThirdParty-Libs/Kapresoft-LibUtil: https://github.com/kapresoft/wow-lib-util
 
@@ -25,6 +26,13 @@ ignore:
   - CHANGELOG.md
   - Libs
   - ThirdParty/ThirdParty.xml
+  - ThirdParty-Libs/LibPrettyPrint/dev
+  - ThirdParty-Libs/LibPrettyPrint/doc
+  - ThirdParty-Libs/LibPrettyPrint/*.toc
+  - ThirdParty-Libs/LibPrettyPrint/LICENSE
+  - ThirdParty-Libs/LibPrettyPrint/Assets
+  - ThirdParty-Libs/LibPrettyPrint/ThirdParty
+  - ThirdParty-Libs/LibPrettyPrint/Libs/Developer
   - ThirdParty-Libs/Ace3/Bindings.xml
   - ThirdParty-Libs/Ace3/*.txt
   - ThirdParty-Libs/Ace3/AceAddon-3.0

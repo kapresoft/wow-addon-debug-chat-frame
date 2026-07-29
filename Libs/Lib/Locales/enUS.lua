@@ -12,7 +12,7 @@ local silent = true
 --@do-not-package@
 if ns.debug:IsDeveloper() then silent = false end
 --@end-do-not-package@
-local L = LibStub('AceLocale-3.0'):NewLocale(ns.addon, 'enUS', true, silent);
+local L = ns:AceLocale():NewLocale(ns.name, 'enUS', true, silent);
 
 
 --[[-----------------------------------------------------------------------------

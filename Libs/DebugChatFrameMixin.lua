@@ -1,11 +1,8 @@
---[[-----------------------------------------------------------------------------
-Local Vars
--------------------------------------------------------------------------------]]
---- @type string
-local addon
 --- @type Namespace_DebugChatFrame
-local ns
-addon, ns = ...
+local ns = select(2, ...)
+
+local TimeUtil = ns:TimeUtil()
+
 
 local sformat, strlower = string.format, string.lower
 
@@ -26,7 +23,7 @@ local o = {}; DebugChatFrame = o
 
 --- @class DebugChatFrameOptions : DebugChatFrameOptionsInterface
 local debugConsoleOptionsDefault = {
-    addon         = addon,
+    addon         = ns.name,
     --- The name is case-insensitive
     chatFrameTabName = 'dcf',
     --- @see Blizzard Interface/FrameXML/Fonts.xml
@@ -116,7 +113,7 @@ local c = ChatLogFrameMixin
 --- @param module string
 function c:prefix(module)
     assert(type(module) == 'string', 'prefix(module): {module} should be a string')
-    local name = (self.options and self.options.addon) or addon
+    local name = (self.options and self.options.addon) or ns.name
     local nameColor   = c1(name)
     local moduleColor = c3(module)
     return sformat('{{%s::%s}}:', nameColor, moduleColor)
@@ -127,7 +124,7 @@ function c:log(...)
     local args = {...}  -- Collect all arguments into a table
     local texts = {}
     for i, v in ipairs(args) do
-        if type(v) == "table" then texts[i] = pformat(v)
+        if type(v) == "table" then texts[i] = ns.dcfmt(v)
         else texts[i] = tostring(v) end
     end
     local message = table.concat(texts, " ")
@@ -234,7 +231,7 @@ function o:New(opt, callbackFn)
     --- @see Interface/FrameXML/ChatFrame.lua
     --- @type ChatLogFrame
     local chatFrame = FCF_OpenTemporaryWindow('CHANNEL20', 'player', nil, true)
-    if not chatFrame then print(addon, c4('Failed to create temporary chat frame.')) return end
+    if not chatFrame then print(ns.name, c4('Failed to create temporary chat frame.')) return end
 
     --This no longer works for setting tab name
     --FCF_SetWindowName(chatFrame, opt.chatFrameTabName)
@@ -251,15 +248,13 @@ function o:New(opt, callbackFn)
     chatFrame:SetFont(f, size, flags)
     chatFrame:SetMaxLines(maxLines)
 
-    if ns.gameVersion == 'classic' then
-        chatFrame:SetScript("OnMouseWheel", function(self, delta)
+    chatFrame:SetScript("OnMouseWheel", function(self, delta)
+        if delta > 0 then self:ScrollUp() else self:ScrollDown() end
+    end)
+    if DEFAULT_CHAT_FRAME then
+        DEFAULT_CHAT_FRAME:SetScript("OnMouseWheel", function(self, delta)
             if delta > 0 then self:ScrollUp() else self:ScrollDown() end
         end)
-        if DEFAULT_CHAT_FRAME then
-            DEFAULT_CHAT_FRAME:SetScript("OnMouseWheel", function(self, delta)
-                if delta > 0 then self:ScrollUp() else self:ScrollDown() end
-            end)
-        end
     end
 
     -- Hook into the dropdown menu
@@ -300,7 +295,7 @@ end
 
 --- @return string The addon version string. Example: 2024.3.1
 function o:GetVersion()
-    local versionText = C_GetAddOnMetadata(addon, 'Version')
+    local versionText = C_GetAddOnMetadata(ns.name, 'Version')
     --@do-not-package@
     if ns.debug:IsDeveloper() then
         versionText = '1.0.0.dev'
@@ -309,12 +304,12 @@ function o:GetVersion()
     return versionText
 end
 
---- @return string The time in ISO Date Format. Example: 2024-03-22T17:34:00Z
+--- @return (string|osdate)? The time in ISO Date Format. Example: 2024-03-22T17:34:00Z
 function o:GetLastUpdate()
-    local lastUpdate = C_GetAddOnMetadata(addon, GITHUB_LAST_CHANGED_DATE)
+    local lastUpdate = C_GetAddOnMetadata(ns.name, GITHUB_LAST_CHANGED_DATE)
     --@do-not-package@
     if ns.debug:IsDeveloper() then
-        lastUpdate = ns:KO().TimeUtil:TimeToISODate()
+        lastUpdate = ns:TimeUtil():TimeToISODate()
     end
     --@end-do-not-package@
     return lastUpdate
@@ -325,14 +320,14 @@ end
 ---local version, curseForge, issues, repo, lastUpdate, useKeyDown, wowInterfaceVersion = GC:GetAddonInfo()
 ---```
 --- /dump DebugChatFrame:GetAddonInfo()
---- @return string, string, string, string, string, number
+--- @return string?, string?, string?, string?, string?, number?
 function o:GetAddonInfo()
     local lastUpdate = self:GetLastUpdate()
     local versionText = self:GetVersion()
     local wowInterfaceVersion = select(4, GetBuildInfo())
 
-    return versionText, C_GetAddOnMetadata(addon, CURSE_FORGE), C_GetAddOnMetadata(addon, GITHUB_ISSUES),
-            C_GetAddOnMetadata(addon, GITHUB_REPO), lastUpdate, wowInterfaceVersion
+    return versionText, C_GetAddOnMetadata(ns.name, CURSE_FORGE), C_GetAddOnMetadata(ns.name, GITHUB_ISSUES),
+            C_GetAddOnMetadata(ns.name, GITHUB_REPO), lastUpdate, wowInterfaceVersion
 end
 
 --- /run print(DebugChatFrame:GetAddonInfoFormatted())
@@ -343,7 +338,6 @@ function o:GetAddonInfoFormatted()
     return sformat("%s:\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
                    'Addon Info',
                    sformat(fmt, 'Version', version),
-                   sformat(fmt, 'Game-Version', ns.gameVersion),
                    sformat(fmt, 'Curse-Forge', curseForge),
                    sformat(fmt, 'Bugs', issues),
                    sformat(fmt, 'Repo', repo),
@@ -363,10 +357,18 @@ local opt = shallow_copy(debugConsoleOptionsDefault)
 opt.fontSize = 16
 opt.maxLines = 100
 o:New(opt, function(chatFrame)
-    ns.chatFrame = chatFrame
-    ns:log(libShortName, 'chatFrame:', chatFrame:GetName())
-    ns:log(libShortName, 'options:', {1, 2, 3})
-    ns:log(libShortName, 'tab-name:', chatFrame:GetTabName())
-    ns:log(libShortName, 'gaveVersion:', ns.gameVersion)
+  ns:log('hello xxx')
+  ns.chatFrame = chatFrame
+  ns:log(libShortName, 'chatFrame:', chatFrame:GetName())
+  ns:log(libShortName, 'options:', {1, 2, 3})
+  ns:log(libShortName, 'tab-name:', chatFrame:GetTabName())
+
 end)
 --@end-do-not-package@
+
+
+C_Timer.After(2, function()
+  tr('hello')
+  print('xxxx hi')
+  print(dcfmt('xx hello'))
+end)
