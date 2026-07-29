@@ -1,4 +1,4 @@
-## Interface: 120007
+## Interface: 11509, 20506, 30403, 40402, 50504, 120007
 ## Version: @project-version@
 ## Title: Debug|cff12E600Chat|rFrame
 ## IconTexture: Interface/AddOns/DebugChatFrame/Libs/Assets/logo-v3
@@ -42,5 +42,4 @@
 ## X-PayPal-Donation-URL: https://www.paypal.com/donate/?hosted_button_id=AX58YP3GSGXVU
 
 ThirdParty\ThirdParty.xml
-Libs\Retail.lua
 Libs\_Core.xml
