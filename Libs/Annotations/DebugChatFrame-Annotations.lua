@@ -39,3 +39,4 @@
 
 --- @class DebugChatFrameInterface
 --- @field New fun(self:DebugChatFrameInterface, ...:any) : ChatLogFrameInterface
+--- @field GetChatFrameTabText fun(self:DebugChatFrameInterface) : string

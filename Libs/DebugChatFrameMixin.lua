@@ -221,6 +221,7 @@ Methods: DebugChatFrame
 
 --- @param opt DebugChatFrameOptions
 --- @param callbackFn fun(chatFrame:ChatLogFrame) | "function(chatFrame) end" | "Set additional settings in the callbackFn"
+--- @return ChatLogFrameInterface
 function o:New(opt, callbackFn)
     local def = debugConsoleOptionsDefault
     opt = opt or def
