@@ -4,7 +4,7 @@ license-output: LICENSE.txt
 enable-nolib-creation: no
 
 manual-changelog:
-  filename: CHANGELOG.txt
+  filename: dev/changelog-release.md
   markup-type: markdown
 
 embedded-libraries:
@@ -18,9 +18,15 @@ tools-used:
   - Bug-Grabber
 
 externals:
-  ThirdParty/Libs/LibPrettyPrint: https://github.com/kapresoft/wow-addon-LibPrettyPrint
-  ThirdParty/Libs/Ace3: https://repos.wowace.com/wow/ace3/trunk
-  ThirdParty/Libs/Kapresoft-LibUtil: https://github.com/kapresoft/wow-lib-util
+  ThirdParty/Libs/LibPrettyPrint:
+    url: https://github.com/kapresoft/wow-addon-LibPrettyPrint
+    tag: latest
+  ThirdParty/Libs/Ace3:
+    url: https://repos.wowace.com/wow/ace3/trunk
+    tag: latest
+  ThirdParty/Libs/Kapresoft-LibUtil:
+    url: https://github.com/kapresoft/wow-lib-util
+    tag: latest
 
 ignore:
   - "*.sh"

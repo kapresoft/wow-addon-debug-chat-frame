@@ -19,18 +19,13 @@ w-sync-libs
 
 #### One-time deploy
 ```shell
-w-deployer -c ./dev/deployer-config.lua
+w-deployer-default
 ```
 
-#### Continuous Deploy with 'quiet' -q and 'watch' -w mode
+#### Continuous Deploy (watch mode)
 
 ```shell
-w-deployer -c ./dev/deployer-config.lua -qw
-```
-
-### Clean build
-```shell
-./dev/release-clean.sh
+w-deployer-watch
 ```
 
 ### Release process
