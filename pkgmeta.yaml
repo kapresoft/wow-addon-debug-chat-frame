@@ -1,7 +1,5 @@
 package-as: DebugChatFrame
 # --------------------------
-license-output: LICENSE.txt
-enable-nolib-creation: no
 
 manual-changelog:
   filename: dev/changelog-release.md
@@ -32,11 +30,11 @@ ignore:
   - "*.sh"
   - "*.md"
   - "*.yaml"
-  - "*.yml"
   - "*.txt"
+  - "*.toml"
+  - "*.json"
   - dev
   - doc
-  - scripts
   - Libs/Developer
   - ThirdParty/Libs/LibPrettyPrint/dev
   - ThirdParty/Libs/LibPrettyPrint/doc
@@ -64,23 +62,25 @@ ignore:
   - ThirdParty/Libs/Ace3/AceTab-3.0
   - ThirdParty/Libs/Ace3/AceTimer-3.0
   - ThirdParty/Libs/Ace3/CallbackHandler-1.0
-  - ThirdParty/Libs/Kapresoft-LibUtil/Lib
-  - ThirdParty/Libs/Kapresoft-LibUtil/External
-  - ThirdParty/Libs/Kapresoft-LibUtil/LICENSE
+  - ThirdParty/Libs/Kapresoft-LibUtil/*.toc
   - ThirdParty/Libs/Kapresoft-LibUtil/dev
   - ThirdParty/Libs/Kapresoft-LibUtil/doc
-  - ThirdParty/Libs/Kapresoft-LibUtil/_Lib.xml
-  - ThirdParty/Libs/Kapresoft-LibUtil/*.toc
-  - ThirdParty/Libs/Kapresoft-LibUtil/*.sh
-  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/AceConfigUtil.lua
-  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/AceLib.lua
-  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/AceLocaleUtil.lua
-  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/AddonInfoUtil.lua
-  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/AddonUtil.lua
-  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/ConsoleHelperMixin.lua
-  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/DebugChatFrameMixin.lua
-  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/LuaEvaluator.lua
-  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/ModuleUtil.lua
-  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/SequenceMixin.lua
-  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/String.lua
-  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Table.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-1-0
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Annotations
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Assets
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/ThirdParty
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/LibUtil.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/LibUtil.xml
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Modules/AceConfigUtil.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Modules/AceLib.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Modules/AceLocaleUtil.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Modules/AddonInfoUtil.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Modules/AddonUtil.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Modules/ConsoleHelperMixin.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Modules/DebugChatFrameMixin.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Modules/LuaEvaluator.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Modules/ModuleUtil.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Modules/SequenceMixin.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Modules/String.lua
+  - ThirdParty/Libs/Kapresoft-LibUtil/Lib-2-0/Modules/Table.lua
+

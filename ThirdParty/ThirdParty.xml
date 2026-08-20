@@ -6,8 +6,8 @@
     <Include file='LibPrettyPrint.xml'/>
 
     <Script file="Libs\Ace3\AceLocale-3.0\AceLocale-3.0.lua"/>
-    <Script file="Libs\Kapresoft-LibUtil\Lib-2-0\ColorFormatter.lua"/>
-    <Script file="Libs\Kapresoft-LibUtil\Lib-2-0\GameVersionMixin.lua"/>
-    <Script file="Libs\Kapresoft-LibUtil\Lib-2-0\TimeUtil.lua"/>
+    <Script file="Libs\Kapresoft-LibUtil\Lib-2-0\Modules\ColorFormatter.lua"/>
+    <Script file="Libs\Kapresoft-LibUtil\Lib-2-0\Modules\GameVersionMixin.lua"/>
+    <Script file="Libs\Kapresoft-LibUtil\Lib-2-0\Modules\TimeUtil.lua"/>
 
 </Ui>

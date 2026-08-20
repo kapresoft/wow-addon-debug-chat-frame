@@ -5,6 +5,7 @@
 # Note: This will build in ./.release/_setup directory
 package-as: _setup
 # --------------------------
+
 # Reuses dev/changelog-release.md. release-build.yml overwrites it at
 # release time for the packager to read, but never commits that change back,
 # so the tracked copy here always stays blank.
@@ -29,6 +30,7 @@ ignore:
   - "*.md"
   - "*.yaml"
   - "*.toc"
+  - "*.toml"
   - "*.sh"
   - "*.txt"
   - dev
@@ -36,10 +38,9 @@ ignore:
   - LICENSE
   - CHANGELOG.md
   - Libs
-  - ThirdParty/ThirdParty.xml
+  - ThirdParty/*.xml
   - ThirdParty-Libs/LibPrettyPrint/dev
   - ThirdParty-Libs/LibPrettyPrint/doc
-  - ThirdParty-Libs/LibPrettyPrint/*.toc
   - ThirdParty-Libs/LibPrettyPrint/LICENSE
   - ThirdParty-Libs/LibPrettyPrint/Assets
   - ThirdParty-Libs/LibPrettyPrint/ThirdParty
@@ -61,11 +62,27 @@ ignore:
   - ThirdParty-Libs/Ace3/AceTab-3.0
   - ThirdParty-Libs/Ace3/AceTimer-3.0
   - ThirdParty-Libs/Ace3/CallbackHandler-1.0
-  - ThirdParty-Libs/Kapresoft-LibUtil/External
-  - ThirdParty-Libs/Kapresoft-LibUtil/Kapresoft-LibUtil.toc
   - ThirdParty-Libs/Kapresoft-LibUtil/LICENSE
   - ThirdParty-Libs/Kapresoft-LibUtil/dev
   - ThirdParty-Libs/Kapresoft-LibUtil/doc
+  - ThirdParty-Libs/Kapresoft-LibUtil/*.toc
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-1-0
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/Assets
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/ThirdParty
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/LibUtil.lua
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/LibUtil.xml
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/Modules/AceConfigUtil.lua
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/Modules/AceLib.lua
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/Modules/AceLocaleUtil.lua
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/Modules/AddonInfoUtil.lua
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/Modules/AddonUtil.lua
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/Modules/ConsoleHelperMixin.lua
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/Modules/DebugChatFrameMixin.lua
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/Modules/LuaEvaluator.lua
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/Modules/ModuleUtil.lua
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/Modules/SequenceMixin.lua
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/Modules/String.lua
+  - ThirdParty-Libs/Kapresoft-LibUtil/Lib-2-0/Modules/Table.lua
 
 
 # Base path is .release/
