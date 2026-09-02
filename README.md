@@ -20,23 +20,14 @@ The Core _DebugChatFrame-Annotations.lua_ can be found here [DebugChatFrame-Anno
 
 This tool is ideal for addon developers looking for a simple, effective way to manage debug outputs without interfering with the standard gameplay experience. Whether you're developing a new addon or maintaining an existing one, DebugChatFrame provides a crucial service in managing debug information.
 
-## Donations
+### Donations
 
-As a software engineer, I am passionate about this project and have dedicated a significant amount of time and effort to creating a high-quality product. If you enjoy using this World of Warcraft add-on, please consider supporting me through a donation via Paypal&trade; or the Bitcoin Address provided below. Your support is greatly appreciated. Thank you in advance for your generosity.
+If DebugChatFrame has made your gameplay or addon development easier, consider supporting its development:
 
-**Bitcoin Address**
+- **[Paypal&trade; Donation](https://www.paypal.com/donate/?hosted_button_id=AX58YP3GSGXVU)**
+- **[Bitcoin Donation](https://www.blockchain.com/btc/address/3QQVAwJGkKHMM2oq6CLVWYgfx83TFVwp39)**
 
-[https://www.blockchain.com/btc/address/3QQVAwJGkKHMM2oq6CLVWYgfx83TFVwp39](https://www.blockchain.com/btc/address/3QQVAwJGkKHMM2oq6CLVWYgfx83TFVwp39)
+## About
 
-&nbsp;
-
-![pixel-line-500px](https://user-images.githubusercontent.com/1599306/209889477-315aa4bb-1e92-4e5f-b684-7d5296427ada.png)
-
-## My Other Addons
-
-- [ActionbarPlus](https://www.curseforge.com/wow/addons/actionbarplus)
-- [ActionbarPlus-M6](https://legacy.curseforge.com/wow/addons/actionbarplus-m6)
-- [AddonSuite](https://www.curseforge.com/wow/addons/addon-suite)
-- [Saved Dungeons & Raids](https://www.curseforge.com/wow/addons/saved-dungeons-raids)
-- [Dev Suite](https://www.curseforge.com/wow/addons/devsuite)
-- [Addon Template](https://www.curseforge.com/wow/addons/addon-template)
+- About the Author [(Tony Lagnada)](https://tony.resume.lagnada.com/)
+- My AddOn Portfolio Can Be Found Here [Curse Forge/Kapresoft](https://www.curseforge.com/members/kapresoft/projects)
