@@ -10,6 +10,7 @@ Type: ChatLogFrame
 --- @class _ChatLogFrame
 --- @field log fun(self:_ChatLogFrame, ...)
 --- @field logp fun(self:_ChatLogFrame, name:string, ...)
+--- @field OnFontSizeChanged fun(self:_ChatLogFrame, handler:fun(chatFrame:_ChatLogFrame, fontSize:number))
 
 --[[-----------------------------------------------------------------------------
 Type: DebugChatFrameOptions
@@ -17,12 +18,12 @@ Type: DebugChatFrameOptions
 --- @class _DebugChatFrameOptions
 local opt = {
     addon = addon,
-    chatFrameName = 'dev',
-    --- ### See Fonts: [_Fonts.xml](https://github.com/kapresoft/wow-addon-debug-chat-frame/blob/a0d3dca2d410198b9da1c9821e5b97c12f774cfc/Core/Fonts/_Fonts.xml)    font = DCF_ConsoleMonoCondensedSemiBold,
+    chatFrameTabName = 'dev',
+    --- ### See Fonts: [_Fonts.xml](https://github.com/kapresoft/wow-addon-debug-chat-frame/blob/main/Libs/Fonts/_Fonts.xml)
     --- @see Blizzard Interface/FrameXML/Fonts.xml
     --- @type Font
     font = DCF_ConsoleMonoCondensedSemiBold,
-    size = 16,
+    fontSize = 16,
     windowAlpha = 1.0,
     maxLines = 100,
 }
@@ -68,3 +69,9 @@ end
 -- Usage
 -- Output: MainModule:: Hello There
 c('MainModule::', 'Hello There')
+
+-- Save the player's pick from the tab's right-click Font Size menu;
+-- pass it back as opt.fontSize to New() on the next load.
+f:OnFontSizeChanged(function(chatFrame, fontSize)
+    MyAddonDB.debugChatFontSize = fontSize
+end)

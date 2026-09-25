@@ -43,10 +43,12 @@ ignore:
   - ThirdParty/Libs/LibPrettyPrint/LibPrettyPrint.xml
   - ThirdParty/Libs/LibPrettyPrint/Assets
   - ThirdParty/Libs/LibPrettyPrint/ThirdParty
+  - ThirdParty/Libs/LibPrettyPrint/Libs/Annotations
   - ThirdParty/Libs/LibPrettyPrint/Libs/Developer
   - ThirdParty/Libs/Ace3/Ace3.lua
   - ThirdParty/Libs/Ace3/tests
-  - ThirdParty/Libs/Ace3/Bindings.xml
+  - ThirdParty/Libs/Ace3/*.toc
+  - ThirdParty/Libs/Ace3/*.xml
   - ThirdParty/Libs/Ace3/AceAddon-3.0
   - ThirdParty/Libs/Ace3/AceBucket-3.0
   - ThirdParty/Libs/Ace3/AceComm-3.0
@@ -54,14 +56,11 @@ ignore:
   - ThirdParty/Libs/Ace3/AceConsole-3.0
   - ThirdParty/Libs/Ace3/AceDB-3.0
   - ThirdParty/Libs/Ace3/AceDBOptions-3.0
-  - ThirdParty/Libs/Ace3/AceEvent-3.0
   - ThirdParty/Libs/Ace3/AceGUI-3.0
   - ThirdParty/Libs/Ace3/AceHook-3.0
-  - ThirdParty/Libs/Ace3/AceLocale-3.0/AceLocale-3.0.xml
   - ThirdParty/Libs/Ace3/AceSerializer-3.0
   - ThirdParty/Libs/Ace3/AceTab-3.0
   - ThirdParty/Libs/Ace3/AceTimer-3.0
-  - ThirdParty/Libs/Ace3/CallbackHandler-1.0
   - ThirdParty/Libs/Kapresoft-LibUtil/*.toc
   - ThirdParty/Libs/Kapresoft-LibUtil/dev
   - ThirdParty/Libs/Kapresoft-LibUtil/doc

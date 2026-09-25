@@ -24,7 +24,7 @@
 	<FontFamily name="DCF_ConsoleMonoCondensedSemiBoldOutline" virtual="true">
 		<Member alphabet="roman">
 			<Font font="Interface\AddOns\DebugChatFrame\Libs\Fonts\Inconsolata_Condensed-SemiBold.ttf"
-				  height="14" outline="Normal">
+				  height="14" outline="NORMAL">
 			</Font>
 		</Member>
 		<Member alphabet="korean">
