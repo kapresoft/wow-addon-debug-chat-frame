@@ -80,3 +80,4 @@ local function debug()
 end
 
 ns.debug = debug()
+DCF_NS = ns

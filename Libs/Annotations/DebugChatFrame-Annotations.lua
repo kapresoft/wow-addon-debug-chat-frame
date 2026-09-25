@@ -36,7 +36,9 @@
 --- @field GetChatFrameTabText fun(self:ChatLogFrameInterface) : string
 --- @field SetAsDefaultChatFrame fun(self:ChatLogFrameInterface, state:boolean)
 --- @field SetAsDefaultChatFrameIfConfigured fun(self:ChatLogFrameInterface)
+--- @field OnFontSizeChanged fun(self:ChatLogFrameInterface, handler:fun(chatFrame:ChatLogFrameInterface, fontSize:number))
 
 --- @class DebugChatFrameInterface
+--- @field Message DebugChatFrameMessages @AceEvent-3.0 message names
 --- @field New fun(self:DebugChatFrameInterface, ...:any) : ChatLogFrameInterface
 --- @field GetChatFrameTabText fun(self:DebugChatFrameInterface) : string

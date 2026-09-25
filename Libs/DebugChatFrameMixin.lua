@@ -2,7 +2,7 @@
 local ns = select(2, ...)
 
 local TimeUtil = ns:TimeUtil()
-
+local AceEvent = LibStub('AceEvent-3.0')
 
 local sformat, strlower = string.format, string.lower
 
@@ -20,6 +20,18 @@ New Instance
 local libShortName = 'DCF'
 --- @class DebugChatFrame : DebugChatFrameInterface
 local o = {}; DebugChatFrame = o
+
+--- @param name string
+local function msg(name)
+  assertsafe(type(name) == 'string', 'msg(name): The fn param <name> is required.')
+  return ('%s::%s'):format(ns.addon, name)
+end
+
+--- @class DebugChatFrameMessages
+o.Message = {
+  --- Payload: `chatFrame:ChatLogFrame, fontSize:number`
+  FontSizeChanged = msg('FontSizeChanged')
+}
 
 --- @class DebugChatFrameOptions : DebugChatFrameOptionsInterface
 local debugConsoleOptionsDefault = {
@@ -213,6 +225,13 @@ function c:IsEqualToTabDropdownName(tabDropDownName)
     return ddName == tabDropDownName
 end
 
+--- @param handler fun(chatFrame:ChatLogFrame, fontSize:number)
+function c:OnFontSizeChanged(handler)
+  AceEvent.RegisterMessage(self, o.Message.FontSizeChanged, function(_, chatFrame, fontSize)
+    if chatFrame == self then handler(chatFrame, fontSize) end
+  end)
+end
+
 
 
 --[[-----------------------------------------------------------------------------
@@ -349,6 +368,17 @@ end
 --- /run DebugChatFrame:Info()
 function o:Info() print(self:GetAddonInfoFormatted()) end
 
+--- @param menuItem table|nil          @Legacy dropdown button; nil from the Menu API
+--- @param chatFrame ChatLogFrame|nil
+--- @param fontSize number|nil
+local function OnFontSizeSet(menuItem, chatFrame, fontSize)
+  local frame = chatFrame or FCF_GetCurrentChatFrame()
+  if not (frame and frame.OnFontSizeChanged == c.OnFontSizeChanged) then return end
+
+  local size = fontSize or (menuItem and menuItem.value)
+  AceEvent:SendMessage(o.Message.FontSizeChanged, frame, size)
+end
+hooksecurefunc('FCF_SetChatWindowFontSize', OnFontSizeSet)
 
 --@do-not-package@
 if not ns.debug:CreateTestChatFrame() then return end

@@ -42,4 +42,15 @@
 ## X-PayPal-Donation-URL: https://www.paypal.com/donate/?hosted_button_id=AX58YP3GSGXVU
 
 ThirdParty\ThirdParty.xml
-Libs\_Core.xml
+
+Libs\Core.lua
+Libs\Fonts\_Fonts.xml
+Libs\Lib\Locales\enUS.lua
+Libs\Lib\Locales\Localization.lua
+#@do-not-package@
+Libs\Developer\DeveloperSetup.lua
+#@end-do-not-package@
+Libs\DebugChatFrameMixin.lua
+#@do-not-package@
+Libs\Developer\Developer.lua
+#@end-do-not-package@

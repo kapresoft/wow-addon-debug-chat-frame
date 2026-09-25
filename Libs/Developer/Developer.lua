@@ -4,6 +4,7 @@ Local Vars
 --- @type Namespace_DebugChatFrame
 local ns = select(2, ...)
 local DCF = DebugChatFrame
+local libName = 'Developer'
 
 --[[-----------------------------------------------------------------------------
 New Instance
@@ -36,6 +37,16 @@ end)()
 end)()
 -------------------------------------------------------------------------------]]
 
+--[[-----------------------------------------------------------------------------
+Font Size Changed Listener
+Test: right-click the tab > Font Size > pick a size
+-------------------------------------------------------------------------------]]
+function o:RegisterOnFontSizeChanged()
+  ns.chatFrame:OnFontSizeChanged(function(chatFrame, fontSize)
+   tr(ns.addon, libName, 'OnFontSizeChanged', 'tab=', chatFrame:GetTabName(), 'fs=', fontSize)
+  end)
+end
+
 --- /run dcfdev:NewDebugChatFrame('Mariko Sama')
 --- @param name Name
 function o:NewDebugChatFrame(name)
@@ -52,6 +63,7 @@ function o:NewDebugChatFrame(name)
   return DCF:New(opt, function(chatFrame)
     chatFrame:logp('Chat Frame Tab Created:', name)
     chatFrame:logp('Chat Frame:', chatFrame:GetName())
+    chatFrame:OnFontSizeChanged(OnFontSizeChanged)
   end)
 end
 
@@ -69,4 +81,3 @@ function o:TestChatFrameTabText()
   local cf = self:NewDebugChatFrame('Test')
   return cf:GetChatFrameTabText(), type(DebugChatFrame)
 end
-
