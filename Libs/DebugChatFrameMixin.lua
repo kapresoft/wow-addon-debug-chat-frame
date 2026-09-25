@@ -27,7 +27,7 @@ local function msg(name)
   return ('%s::%s'):format(ns.addon, name)
 end
 
---- @class DebugChatFrameMessages
+--- @type DebugChatFrameMessages
 o.Message = {
   --- Payload: `chatFrame:ChatLogFrame, fontSize:number`
   FontSizeChanged = msg('FontSizeChanged')
@@ -238,9 +238,9 @@ end
 Methods: DebugChatFrame
 -------------------------------------------------------------------------------]]
 
---- @param opt DebugChatFrameOptions
+--- @param opt DebugChatFrameOptions?
 --- @param callbackFn fun(chatFrame:ChatLogFrame) | "function(chatFrame) end" | "Set additional settings in the callbackFn"
---- @return ChatLogFrameInterface
+--- @return ChatLogFrameInterface? @nil if Blizzard can't open the window
 function o:New(opt, callbackFn)
     local def = debugConsoleOptionsDefault
     opt = opt or def
