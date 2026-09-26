@@ -45,6 +45,7 @@ ThirdParty\ThirdParty.xml
 
 Libs\Core.lua
 Libs\Fonts\_Fonts.xml
+Libs\Fonts\_FontsLegacy.xml
 Libs\Lib\Locales\enUS.lua
 Libs\Lib\Locales\Localization.lua
 #@do-not-package@

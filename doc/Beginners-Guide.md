@@ -232,7 +232,7 @@ local opt = {
     --- ### See Fonts: [_Fonts.xml](https://github.com/kapresoft/wow-addon-debug-chat-frame/blob/main/Libs/Fonts/_Fonts.xml)
     --- @see Blizzard Interface/FrameXML/Fonts.xml
     --- @type Font
-    font = DCF_ConsoleMonoCondensedSemiBold,
+    font = DCF_InconsolataCondensed_SemiBold_Outline,
     fontSize = 16,
     windowAlpha = 1.0,
     maxLines = 100,
