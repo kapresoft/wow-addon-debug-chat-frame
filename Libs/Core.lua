@@ -62,7 +62,6 @@ Type: DebugSettingsFlag
 --- @see DeveloperSetup
 local flag = {
     developer = false,
-    createTestChatFrame = false,
 }
 
 --[[-----------------------------------------------------------------------------
@@ -75,7 +74,6 @@ local function debug()
     --- @class DebugSettings
     local ds = { flag = flag }
     function ds:IsDeveloper() return self.flag.developer == true  end
-    function ds:CreateTestChatFrame() return self:IsDeveloper() and self.flag.createTestChatFrame == true end
     return ds;
 end
 

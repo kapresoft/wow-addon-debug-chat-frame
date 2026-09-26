@@ -4,13 +4,14 @@ Local Vars
 --- @type Namespace_DebugChatFrame
 local ns = select(2, ...)
 local DCF = DebugChatFrame
+local AceEvent = LibStub('AceEvent-3.0')
 local libName = 'Developer'
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
---- @class DebugChatFrame_Developer
-local o = {}; dcfdev = o
+--- @class DebugChatFrame_Developer : AceEvent-3.0
+local o = AceEvent:Embed({}); dcfdev = o
 
 --[[-----------------------------------------------------------------------------
 # Predefine
@@ -38,12 +39,53 @@ end)()
 -------------------------------------------------------------------------------]]
 
 --[[-----------------------------------------------------------------------------
+Support Functions
+-------------------------------------------------------------------------------]]
+
+--- @type DebugChatFrameOptions
+local testChatFrameOptions = {
+  addon                = ns.name,
+  chatFrameTabName     = 'dcf',
+  font                 = DCF_InconsolataExtraCondensed_SemiBold_Outline,
+--[[
+  font                 = DCF_InconsolataCondensed_Regular_Outline,
+  font                 = DCF_InconsolataExtraCondensed_SemiBold_Outline,
+  font                 = DCF_InconsolataUltraCondensed_SemiBold_Outline,
+  font                 = DCF_Inconsolata_SemiBold_Outline,
+  font                 = DCF_NotoSansMono_zhCN_Outline,
+  font                 = DCF_RobotoMono_Medium_Outline,
+  font                 = DCF_NotoSansMono_Regular_Outline,
+  ]]
+  fontSize             = 14,
+  windowAlpha          = 1.0,
+  maxLines             = 100,
+  makeDefaultChatFrame = true,
+}
+
+function o:OnPlayerLogin()
+  self:UnregisterEvent('PLAYER_LOGIN')
+  self:NewTestChatFrame()
+end
+--o:RegisterEvent('PLAYER_LOGIN', 'OnPlayerLogin')
+
+
+--- /run dcfdev:NewTestChatFrame()
+function o:NewTestChatFrame()
+  return DCF:New(testChatFrameOptions, function(chatFrame)
+    ns.chatFrame = chatFrame
+    ns:log(libName, 'chatFrame:', chatFrame:GetName())
+    ns:log(libName, 'options:', {1, 2, 3})
+    ns:log(libName, 'tab-name:', chatFrame:GetTabName())
+  end)
+end
+
+--[[-----------------------------------------------------------------------------
 Font Size Changed Listener
 Test: right-click the tab > Font Size > pick a size
 -------------------------------------------------------------------------------]]
 function o:RegisterOnFontSizeChanged()
   ns.chatFrame:OnFontSizeChanged(function(chatFrame, fontSize)
-   tr(ns.addon, libName, 'OnFontSizeChanged', 'tab=', chatFrame:GetTabName(), 'fs=', fontSize)
+   print(ns.addon, libName, 'OnFontSizeChanged', 'tab=', chatFrame:GetTabName(), 'fs=', fontSize)
   end)
 end
 
@@ -57,7 +99,7 @@ function o:NewDebugChatFrame(name)
     --- @see Blizzard Interface/FrameXML/Fonts.xml
     --- @type Font
     font = DCF_ConsoleMonoCondensedSemiBold,
-    size = 18,
+    size = 27,
   }
 
   return DCF:New(opt, function(chatFrame)

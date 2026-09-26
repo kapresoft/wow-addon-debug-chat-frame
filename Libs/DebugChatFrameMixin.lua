@@ -17,7 +17,6 @@ local C_GetAddOnMetadata = C_AddOns and C_AddOns.GetAddOnMetadata or GetAddOnMet
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
-local libShortName = 'DCF'
 --- @class DebugChatFrame : DebugChatFrameInterface
 local o = {}; DebugChatFrame = o
 
@@ -50,14 +49,6 @@ local debugConsoleOptionsDefault = {
 --[[-----------------------------------------------------------------------------
 Support Functions
 -------------------------------------------------------------------------------]]
-local function shallow_copy(t)
-    local t2 = {}
-    for k,v in pairs(t) do
-        t2[k] = v
-    end
-    return t2
-end
-
 --- @param color ColorMixin
 --- @return fun(arg:any) : string The string wrapped in color code
 local function NewFormatterFromColor(color)
@@ -379,18 +370,3 @@ local function OnFontSizeSet(menuItem, chatFrame, fontSize)
   AceEvent:SendMessage(o.Message.FontSizeChanged, frame, size)
 end
 hooksecurefunc('FCF_SetChatWindowFontSize', OnFontSizeSet)
-
---@do-not-package@
-if not ns.debug:CreateTestChatFrame() then return end
-
---- @type DebugChatFrameOptions
-local opt = shallow_copy(debugConsoleOptionsDefault)
-opt.fontSize = 16
-opt.maxLines = 100
-o:New(opt, function(chatFrame)
-  ns.chatFrame = chatFrame
-  ns:log(libShortName, 'chatFrame:', chatFrame:GetName())
-  ns:log(libShortName, 'options:', {1, 2, 3})
-  ns:log(libShortName, 'tab-name:', chatFrame:GetTabName())
-end)
---@end-do-not-package@
