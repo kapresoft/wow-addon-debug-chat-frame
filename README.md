@@ -50,7 +50,7 @@ The locale names match `GetLocale()`. Inconsolata has no Cyrillic or CJK glyphs;
 Kept for existing integrations: `DCF_ConsoleMonoCondensedSemiBold`, `DCF_ConsoleMonoSemiCondensedBlack`, `DCF_ConsoleMedium`, each with an `Outline` variant (e.g. `DCF_ConsoleMonoCondensedSemiBoldOutline`).
 
 ## Usage
-To get started, take a look at the [Beginner Guide](https://github.com/kapresoft/wow-addon-debug-chat-frame/wiki/DebugChatFrame-Beginner-Guide).
+To get started, take a look at the [Beginner Guide](doc/Beginners-Guide.md).
 
 The Core _DebugChatFrame-Annotations.lua_ can be found here [DebugChatFrame-Annotations.lua](Libs/Annotations/DebugChatFrame-Annotations.lua).  The Core Interface.lua file contains EmmyLua annotations that will help your IDE provide autocompletion, type checking, and other helpful intellisense features when developing World of Warcraft addons.
 

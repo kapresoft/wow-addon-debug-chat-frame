@@ -6,6 +6,12 @@
 
 DebugChatFrame is a load-on-demand World of Warcraft AddOn Library designed to help developers by providing a dedicated temporary Chat Frame for logging debug messages. This guide will walk you through the installation, usage, and API functions provided by DebugChatFrame to enhance your addon development process.
 
+## IDE Support: EmmyLua Annotations
+
+Integrating DebugChatFrame into your addon? Add [DebugChatFrame-Annotations.lua](../Libs/Annotations/DebugChatFrame-Annotations.lua) to your project or your IDE's Lua library path. It describes the public API, so an EmmyLua-aware IDE (IntelliJ with EmmyLua, or VS Code with the Lua Language Server) gives you autocompletion and type checks for `DebugChatFrame:New()`, the options table and every chat frame method, including `OnFontSizeChanged`.
+
+The file is for your IDE only; your addon doesn't load it at runtime. The Usage examples below are annotated with its types (`DebugChatFrameOptionsInterface`, `ChatLogFrameInterface`).
+
 ## Loading the Library
 
 ### Declaring as an Optional Dependency
@@ -24,9 +30,9 @@ If you prefer a more dynamic approach, especially useful when your addon might n
 
 ```lua
 -- Check if DebugChatFrame is installed and attempt to enable it for the current player
-if not IsAddOnLoaded('DebugChatFrame') then
-    EnableAddOn('DebugChatFrame', UnitName('player'))
-    LoadAddOn('DebugChatFrame')
+if not C_AddOns.IsAddOnLoaded('DebugChatFrame') then
+    C_AddOns.EnableAddOn('DebugChatFrame', UnitName('player'))
+    C_AddOns.LoadAddOn('DebugChatFrame')
 end
 ```
 
@@ -66,12 +72,24 @@ Before you can log any messages, you must create a new debug frame, which is typ
 local addon, ns = ...
 local module = 'DebugChatFrameExample'
 
+--- @type DebugChatFrameOptionsInterface
+local opt = {
+    addon = addon,
+    chatFrameTabName = 'dev',
+    font = DCF_InconsolataCondensed_SemiBold_Outline,
+    fontSize = 16,
+    maxLines = 200,
+}
+
+--- @type ChatLogFrameInterface
 ns.debugFrame = DebugChatFrame:New(opt, function(chatFrame)
    chatFrame:log(module, 'chatFrame:', chatFrame:GetName())
    chatFrame:log(module, 'options:', {1, 2, 3})
    chatFrame:log(module, 'tab-name:', chatFrame:GetTabName())
 end);
 ```
+
+For `font`, pick any name from [Available Font Names](https://github.com/kapresoft/wow-addon-debug-chat-frame#available-font-names).
 
 ### Breakdown of the Code:
 
@@ -90,7 +108,7 @@ This sets a local variable `module` to be used as an identifier in logging messa
 `ns.debugFrame = DebugChatFrame:New(opt, function(chatFrame) ... end)`
 This function call creates a new debug chat frame.
 
-- `opt`: Represents the options table for configuring the debug frame (not shown in detail here, needs to be defined elsewhere or passed in).
+- `opt`: The options table defined above (tab name, font, font size, max lines).
 - The second argument is a callback function that initializes the debug frame when it is created.
 
 In your DebugChatFrame initialization code, the callback function serves as a powerful tool for customizing and setting up the chat frame right after its creation. This function provides an opportunity to configure specific properties, log initial settings, or perform any other setup actions required by your addon.
@@ -105,7 +123,7 @@ The callback function in the `DebugChatFrame:New()` method is executed immediate
 local addon, ns = ...
 local module = 'DebugChatFrameExample'
 
--- Initialize and customize the debug chat frame
+-- Initialize and customize the debug chat frame (opt as defined above)
 ns.debugFrame = DebugChatFrame:New(opt, function(chatFrame)
     -- Log the creation and properties of the new chat frame
     chatFrame:log(module, 'chatFrame:', chatFrame:GetName())
@@ -140,7 +158,7 @@ Here's an example debug chat frame using a fixed-width (monospace) font [_Incons
 
 This setup not only initializes the debug frame but also tailors it to the specific needs of your addon, leveraging the full flexibility of the `DebugChatFrame` library to enhance debugging and development workflows.
 
-This initialization script is ideal for setting up a debug environment where you can track different aspects of your addon's behavior and configuration in real-time. Ensure that `DebugChatFrame` and any necessary configuration options (`opt`) are correctly defined to use this feature effectively.
+This initialization script is ideal for setting up a debug environment where you can track different aspects of your addon's behavior and configuration in real-time. Ensure that `DebugChatFrame` is loaded and `opt` is defined before calling `New()`.
 
 Here are various ways a developer can utilize an instance of DebugChatFrame to enhance debugging and monitoring in the development of a World of Warcraft addon. The following examples illustrate how this powerful tool can be employed to log different types of messages:
 
@@ -210,51 +228,30 @@ To hear changes from every DebugChatFrame tab instead, register the AceEvent-3.0
 ```lua
 --[[-----------------------------------------------------------------------------
 DebugChatFrame Usage
+Types: Libs/Annotations/DebugChatFrame-Annotations.lua
 -------------------------------------------------------------------------------]]
 local addon, ns = ...
 local module = 'DebugChatFrameExample'
 
---[[-----------------------------------------------------------------------------
-Type: ChatLogFrame
--------------------------------------------------------------------------------]]
---- @class _ChatLogFrame
---- @field log fun(self:_ChatLogFrame, ...)
---- @field logp fun(self:_ChatLogFrame, name:string, ...)
---- @field OnFontSizeChanged fun(self:_ChatLogFrame, handler:fun(chatFrame:_ChatLogFrame, fontSize:number))
-
---[[-----------------------------------------------------------------------------
-Type: DebugChatFrameOptions
--------------------------------------------------------------------------------]]
---- @class _DebugChatFrameOptions
+--- @type DebugChatFrameOptionsInterface
 local opt = {
     addon = addon,
     chatFrameTabName = 'dev',
-    --- ### See Fonts: [_Fonts.xml](https://github.com/kapresoft/wow-addon-debug-chat-frame/blob/main/Libs/Fonts/_Fonts.xml)
-    --- @see Blizzard Interface/FrameXML/Fonts.xml
-    --- @type Font
+    --- See [Available Font Names](https://github.com/kapresoft/wow-addon-debug-chat-frame#available-font-names)
     font = DCF_InconsolataCondensed_SemiBold_Outline,
     fontSize = 16,
-    windowAlpha = 1.0,
     maxLines = 100,
 }
 
---[[-----------------------------------------------------------------------------
-Type: DebugChatFrame Interface
--------------------------------------------------------------------------------]]
---- @alias DebugChatFrameCallbackFn fun(chatFrame:_ChatLogFrame) | "function(chatFrame) chatFrame:log('hello') end"
----
---- @class _DebugChatFrame
---- @field New fun(self:_DebugChatFrame, opt:DebugChatFrameOptions, callbackFn:DebugChatFrameCallbackFn) : _ChatLogFrame
-
---- interface
---- @type _DebugChatFrame
-local DebugChatFrame = {}
+--- @type DebugChatFrameInterface
+local dcf = DebugChatFrame
 
 --[[-----------------------------------------------------------------------------
 Main Code
 -------------------------------------------------------------------------------]]
 
-local f = DebugChatFrame:New(opt, function(chatFrame)
+--- @type ChatLogFrameInterface
+local f = dcf:New(opt, function(chatFrame)
     chatFrame:log(module, 'chatFrame:', chatFrame:GetName())
     chatFrame:log(module, 'options:', {1, 2, 3})
     chatFrame:log(module, 'tab-name:', chatFrame:GetTabName())
@@ -289,5 +286,5 @@ end)
 
 ## Support
 
-For issues, suggestions, or contributions, please file and [issue](/kapresoft/wow-addon-debug-chat-frame/issues/new/choose) to start the discussion.
+For issues, suggestions, or contributions, please file an [issue](https://github.com/kapresoft/wow-addon-debug-chat-frame/issues/new/choose) to start the discussion.
 
