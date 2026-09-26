@@ -47,3 +47,31 @@
 --- @field GetAddonInfo fun(self:DebugChatFrameInterface): string?, string?, string?, string?, string?, number?                                     @version, curseForge, issues, repo, lastUpdate, interface
 --- @field GetAddonInfoFormatted fun(self:DebugChatFrameInterface): string
 --- @field Info fun(self:DebugChatFrameInterface)                                                                                                   @Prints GetAddonInfoFormatted()
+
+--[[-----------------------------------------------------------------------------
+Font Objects
+-------------------------------------------------------------------------------]]
+--- @type FontObject
+DCF_Inconsolata_Regular_Outline = {}
+--- @type FontObject
+DCF_Inconsolata_SemiBold_Outline = {}
+--- @type FontObject
+DCF_InconsolataCondensed_SemiBold_Outline = {}
+--- @type FontObject
+DCF_InconsolataExtraCondensed_SemiBold_Outline = {}
+--- @type FontObject
+DCF_InconsolataUltraCondensed_SemiBold_Outline = {}
+--- @type FontObject
+DCF_RobotoMono_Medium_Outline = {}
+--- @type FontObject
+DCF_NotoSansMono_Regular_Outline = {}
+
+-- Named by GetLocale()
+--- @type FontObject
+DCF_RobotoMono_ruRU_Outline = {}
+--- @type FontObject
+DCF_NotoSansMono_zhCN_Outline = {}
+--- @type FontObject
+DCF_NotoSansMono_zhTW_Outline = {}
+--- @type FontObject
+DCF_NotoSansMono_koKR_Outline = {}
