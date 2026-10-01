@@ -7,12 +7,12 @@ local module = 'DebugChatFrameExample'
 
 --- @type DebugChatFrameOptionsInterface
 local opt = {
-    addon = addon,
-    chatFrameTabName = 'dev',
-    --- See [Available Font Names](https://github.com/kapresoft/wow-addon-debug-chat-frame#available-font-names)
-    font = DCF_InconsolataCondensed_SemiBold_Outline,
-    fontSize = 16,
-    maxLines = 100,
+  addon = addon,
+  chatFrameTabName = 'dev',
+  --- See [Available Font Names](https://github.com/kapresoft/wow-addon-debug-chat-frame#available-font-names)
+  font = DCF_InconsolataCondensed_SemiBold_Outline,
+  fontSize = 16,
+  maxLines = 100,
 }
 
 --- @type DebugChatFrameInterface
@@ -24,10 +24,10 @@ Main Code
 
 --- @type ChatLogFrameInterface
 local f = dcf:New(opt, function(chatFrame)
-    chatFrame:log(module, 'chatFrame:', chatFrame:GetName())
-    chatFrame:log(module, 'options:', {1, 2, 3})
-    chatFrame:log(module, 'tab-name:', chatFrame:GetTabName())
-end);
+  chatFrame:log(module, 'chatFrame:', chatFrame:GetName())
+  chatFrame:log(module, 'options:', { 1, 2, 3 })
+  chatFrame:log(module, 'tab-name:', chatFrame:GetTabName())
+end)
 ns.chatFrame = f
 
 -- standard logging
@@ -41,8 +41,8 @@ f:logp(module, 'Loading...')
 -- define a global function c()
 --- @vararg any
 function c(...)
-    if ns.chatFrame then return ns.chatFrame:log(...) end
-    print(...)
+  if ns.chatFrame then return ns.chatFrame:log(...) end
+  print(...)
 end
 
 -- Usage
@@ -51,6 +51,4 @@ c('MainModule::', 'Hello There')
 
 -- Save the player's pick from the tab's right-click Font Size menu;
 -- pass it back as opt.fontSize to New() on the next load.
-f:OnFontSizeChanged(function(chatFrame, fontSize)
-    MyAddonDB.debugChatFontSize = fontSize
-end)
+f:OnFontSizeChanged(function(chatFrame, fontSize) MyAddonDB.debugChatFontSize = fontSize end)
