@@ -10,5 +10,4 @@ template: |
   [Release Notes](https://github.com/kapresoft/$REPOSITORY/releases/tag/$RESOLVED_VERSION) | [Full Changelog](https://github.com/kapresoft/$REPOSITORY/compare/$PREVIOUS_TAG...$RESOLVED_VERSION) | [Curse Forge](https://www.curseforge.com/wow/addons/debugchatframe/files)
   
   #### What’s Changed
-  
   $CHANGES
