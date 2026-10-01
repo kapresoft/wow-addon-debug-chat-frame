@@ -26,7 +26,7 @@ Third-party libs (LibStub, AceLocale, CallbackHandler, AceEvent, LibPrettyPrint,
 
 | File | Role |
 |---|---|
-| `Core.lua` | Namespace, `prefix`/`log` helpers, debug flags |
+| `Core.lua` | Namespace, `prefix`/`log` helpers |
 | `DebugChatFrameMixin.lua` | Global `DebugChatFrame` API and the `ChatLogFrameMixin` applied to each created chat frame |
 | `Annotations/` | EmmyLua type annotations |
 | `Lib/Locales/` | AceLocale strings |

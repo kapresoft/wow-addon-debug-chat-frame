@@ -4,35 +4,35 @@ local env = require('user-env')
 
 --- @type DeploymentConfig
 local c = {
-  version = "1.0.0",
-  name = "DevSuite",
+  version = '1.0.0',
+  name = 'DevSuite',
   --- @type table<string, ProjectAddOnInfo>
   addons = {
-    ["."] = {
-      deploy=true
+    ['.'] = {
+      deploy = true,
     },
   },
   deployments = {
-    ["classic-era"] = {
+    ['classic-era'] = {
       deploy = false,
-      dir=env.wow.classic_era.addOnDir
+      dir = env.wow.classic_era.addOnDir,
     },
-    ["classic"] = {
+    ['classic'] = {
       deploy = false,
-      dir=env.wow.classic.addOnDir
+      dir = env.wow.classic.addOnDir,
     },
-    ["classic-anniversary"] = {
+    ['classic-anniversary'] = {
       deploy = true,
-      dir=env.wow.classic_anniversary.addOnDir,
+      dir = env.wow.classic_anniversary.addOnDir,
     },
-    ["retail"] = {
+    ['retail'] = {
       deploy = false,
-      dir=env.wow.retail.addOnDir,
+      dir = env.wow.retail.addOnDir,
     },
-    ["test"] = {
+    ['test'] = {
       deploy = false,
-      dir=path("%s/Desktop/deployer/wow/", env.home)
+      dir = path('%s/Desktop/deployer/wow/', env.home),
     },
-  }
+  },
 }
 return c

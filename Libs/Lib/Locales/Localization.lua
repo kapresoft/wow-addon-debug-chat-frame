@@ -3,4 +3,4 @@ local ns = select(2, ...)
 local L = ns:GetLocale()
 
 -- General
-DCF_TITLE                                 = "DebugChatFrame"
+DCF_TITLE = 'DebugChatFrame'
