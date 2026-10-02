@@ -1,5 +1,9 @@
-# DebugChatFrame: A Developer's Tool for WoW Addon Development
->A Developer's Library for utilizing a Debug Chat Frame Console for WoW Addon Development
+[![Release Build](https://github.com/kapresoft/wow-addon-debug-chat-frame/actions/workflows/release-build.yml/badge.svg)](https://github.com/kapresoft/wow-addon-debug-chat-frame/actions/workflows/release-build.yml)
+
+# DebugChatFrame :: A Developer's Tool for WoW Addon Development
+> ▶ A [World of Warcraft](https://worldofwarcraft.com/) AddOn
+
+![download-count](https://cf.way2muchnoise.eu/full_1007677_downloads.svg?badge_style=for_the_badge) ![supported-wow-versions](https://cf.way2muchnoise.eu/versions/World%20of%20Warcraft%20Versions_1007677_all.svg?badge_style=for_the_badge)
 
 DebugChatFrame is a highly efficient library addon specifically designed to facilitate World of Warcraft addon developers by providing a dedicated and temporary chat frame for debugging. This tool is load-on-demand, ensuring minimal resource usage until it's explicitly needed.
 
