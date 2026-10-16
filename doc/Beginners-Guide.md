@@ -203,7 +203,7 @@ The output of this usage would be "MainModule:: Hello There", formatted by the g
 
 ### Syncing the Player's Font Size
 
-> Added in the DebugChatFrame release after 2026.8.2.
+> Added in the DebugChatFrame release 2026.9.1.
 
 Players can change the debug tab's font size from its right-click **Font Size** menu. To keep that choice across sessions, register a handler with `OnFontSizeChanged` and save the new size in your addon's saved variables:
 
