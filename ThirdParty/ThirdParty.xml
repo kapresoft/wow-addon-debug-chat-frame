@@ -5,10 +5,11 @@
     <Script file="Libs\Ace3\LibStub\LibStub.lua"/>
     <Script file="Libs\Ace3\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
     <Script file="Libs\LibPrettyPrint\Libs\Namespace.lua"/>
+    <Script file="Libs\LibPrettyPrint\Libs\LibPrettyPrint.lua"/>
     <Script file="Libs\LibPrettyPrint\Libs\pprint.lua"/>
+    <Script file="Libs\LibPrettyPrint\Libs\ValueFormatter.lua"/>
     <Script file="Libs\LibPrettyPrint\Libs\Formatter.lua"/>
     <Script file="Libs\LibPrettyPrint\Libs\Printer.lua"/>
-    <Script file="Libs\LibPrettyPrint\Libs\LibPrettyPrint.lua"/>
     <Script file="Libs\Ace3\AceLocale-3.0\AceLocale-3.0.lua"/>
     <Script file="Libs\Ace3\AceEvent-3.0\AceEvent-3.0.lua"/>
     <Script file="Libs\Kapresoft-LibUtil\Lib-2-0\Modules\ColorFormatter.lua"/>
