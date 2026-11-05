@@ -3,8 +3,10 @@ Local Vars
 -------------------------------------------------------------------------------]]
 --- @type Namespace_DebugChatFrame
 local ns = select(2, ...)
+
 local DCF = DebugChatFrame
 local AceEvent = LibStub('AceEvent-3.0')
+local Tests = ns.Tests
 local libName = 'Developer'
 
 --[[-----------------------------------------------------------------------------
@@ -14,12 +16,17 @@ New Instance
 local o = AceEvent:Embed({}); dcfdev = o
 
 --[[-----------------------------------------------------------------------------
-# Predefine
+# Load On Demand
 /run (function()
-  C_AddOns.LoadAddOn('DebugChatFrame');
+  local lao = C_AddOns.LoadAddOn; lao('DebugChatFrame');
+  print('DebugChatFrame=', DebugChatFrame);
+end)()
+/run (function()
+  local lao = C_AddOns.LoadAddOn; lao('DebugChatFrame');
   print('DebugChatFrame::'); DevTools_Dump(DebugChatFrame);
 end)()
-/run dcfdev:NewDebugChatFrame('Mariko Sama')
+
+/dcf testLargeFont
 /dump DebugChatFrame.SelectDefaultChatFrame
 
 # Print Some Info
@@ -32,11 +39,24 @@ end)()
 # Create New Tab
 /run (
   function()
-  local dcf = DebugChatFrame;
-  local opt = { chatFrameTabName = 'Test'};
+  local dcf = DebugChatFrame; local opt = { chatFrameTabName = 'Test'};
   cf = DebugChatFrame:New(opt, function(cf) print('chatFrame:', tostring(cf)); end)
 end)()
 -------------------------------------------------------------------------------]]
+
+--[[-----------------------------------------------------------------------------
+Methods
+-------------------------------------------------------------------------------]]
+
+--- Runs the dev tests in Tests.lua; load DebugChatFrame first.
+--- ### Example:
+--- ```lua
+--- dcfdev:RunTests()
+--- ```
+function o:RunTests()
+  Tests:TestNewTab()
+  Tests:TestLargeFont()
+end
 
 --[[-----------------------------------------------------------------------------
 Support Functions
@@ -62,11 +82,62 @@ local testChatFrameOptions = {
   makeDefaultChatFrame = true,
 }
 
-function o:OnPlayerLogin()
-  self:UnregisterEvent('PLAYER_LOGIN')
-  self:NewTestChatFrame()
+--- @param addonName Name
+function o:OnAddonLoaded(_, addonName)
+  if addonName ~= ns.name then return end
+  self:UnregisterEvent('ADDON_LOADED')
+  self:RegisterSlashCommand()
+  self:PrintInstructions()
 end
---o:RegisterEvent('PLAYER_LOGIN', 'OnPlayerLogin')
+
+function o:RegisterSlashCommand()
+  SLASH_DCF_DEV1 = '/dcf'
+  SlashCmdList.DCF_DEV = function(msg) self:OnSlashCommand(msg) end
+end
+
+-- Keys are lowercase so commands match in any case
+local commands = {
+  tests = function() o:RunTests() end,
+  testnewtab = function() Tests:TestNewTab() end,
+  testlargefont = function() Tests:TestLargeFont() end,
+}
+commands.tnt = commands.testnewtab
+commands.tlf = commands.testlargefont
+
+--- ### Example:
+--- ```
+--- /dcf
+--- /dcf tests
+--- /dcf testLargeFont
+--- /dcf tlf
+--- ```
+--- @param msg string
+function o:OnSlashCommand(msg)
+  local command = commands[strtrim(msg):lower()]
+  if command then return command() end
+  self:PrintInstructions()
+end
+
+local yellow = ns:ColorFn(YELLOW_THREAT_COLOR)
+local blue = ns:ColorFn(LIGHTBLUE_FONT_COLOR)
+
+-- Padding stays outside the color codes to keep columns aligned
+local usage = {
+  yellow('Usage:') .. ' /dcf [command]',
+  '  Commands:',
+  '    ' .. blue('tests') .. '                Run the dev tests (same as /run dcfdev:RunTests())',
+  '    ' .. blue('testNewTab') .. ', ' .. blue('tnt') .. '      Open a tab and check print() lands in it',
+  '    ' .. blue('testLargeFont') .. ', ' .. blue('tlf') .. '   Open a tab in a large font',
+  '    ' .. blue('(none)') .. '               Show this help',
+  '',
+  '  Global Variables:',
+  '    ' .. blue('dcfdev') .. '               The DebugChatFrame Developer instance',
+}
+
+function o:PrintInstructions()
+  print('::', blue(ns.name .. ' Console Commands'), '::')
+  for _, line in ipairs(usage) do print(line) end
+end
 
 --- /run dcfdev:NewTestChatFrame()
 function o:NewTestChatFrame()
@@ -79,47 +150,7 @@ function o:NewTestChatFrame()
 end
 
 --[[-----------------------------------------------------------------------------
-Font Size Changed Listener
-Test: right-click the tab > Font Size > pick a size
+Event Hooks
 -------------------------------------------------------------------------------]]
-function o:RegisterOnFontSizeChanged()
-  ns.chatFrame:OnFontSizeChanged(
-    function(chatFrame, fontSize)
-      print(ns.addon, libName, 'OnFontSizeChanged', 'tab=', chatFrame:GetTabName(), 'fs=', fontSize)
-    end
-  )
-end
-
---- /run dcfdev:NewDebugChatFrame('Mariko Sama')
---- @param name Name
-function o:NewDebugChatFrame(name)
-  --- @type DebugChatFrameOptions
-  local opt = {
-    chatFrameTabName = name or 'undef',
-    --- @see Blizzard Interface/FrameXML/Fonts.xml
-    --- @type Font
-    font = DCF_ConsoleMonoCondensedSemiBold,
-    size = 27,
-  }
-
-  return DCF:New(opt, function(chatFrame)
-    chatFrame:logp('Chat Frame Tab Created:', name)
-    chatFrame:logp('Chat Frame:', chatFrame:GetName())
-    chatFrame:OnFontSizeChanged(OnFontSizeChanged)
-  end)
-end
-
---- /dump dcfdev:TestSelect()
-function o:TestSelect()
-  local cf = self:NewDebugChatFrame('Test')
-  cf:SelectDefaultChatFrame()
-  local txt = cf:GetChatFrameTabText()
-  print('txt=', txt)
-  return txt
-end
-
---- /dump dcfdev:TestChatFrameTabText()
-function o:TestChatFrameTabText()
-  local cf = self:NewDebugChatFrame('Test')
-  return cf:GetChatFrameTabText(), type(DebugChatFrame)
-end
+-- LoadOnDemand loads after login, so PLAYER_LOGIN never fires
+o:RegisterEvent('ADDON_LOADED', 'OnAddonLoaded')

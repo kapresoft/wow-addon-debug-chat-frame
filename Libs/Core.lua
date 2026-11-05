@@ -3,16 +3,16 @@ local colorFormatter = LibStub('Kapresoft-ColorFormatter-2-0')
 
 local addon, xns = ...
 
---- @class Namespace_DebugChatFrame : Kapresoft_Base_Namespace, Kapresoft-GameVersionMixin-2-0
---- @field name Name The addon name
+--- @class (partial) Namespace_DebugChatFrame : Kapresoft-GameVersionMixin-2-0
+--- @field name Name              @The addon name
 --- @field chatFrame ChatLogFrame @developer mode only
 local ns = xns
 ns.name = addon
 
 Mixin(ns, GVM)
 
---- @param rgbHex RGBHex?     @Optional
---- @return cfFn, colorRGBA?
+--- @param rgbHex colorRGBA|HexRGBA|HexRGB @RED_THREAT_COLOR | '565656fc' | '565656' | 'fc565656'
+--- @return cfFn
 function ns:ColorFn(rgbHex) return colorFormatter:ColorFn(rgbHex) end
 --- @return Kapresoft-TimeUtil-2-0
 function ns:TimeUtil() return LibStub('Kapresoft-TimeUtil-2-0') end
@@ -21,7 +21,7 @@ function ns:AceLocale() return LibStub('AceLocale-3.0') end
 --- @return table<string, string>
 function ns:GetLocale() return self:AceLocale():GetLocale(self.name) end
 
-local c1 = ns:ColorFn(RARE_BLUE_COLOR)
+local c1 = ns:ColorFn('435BFF')
 local c2 = ns:ColorFn(YELLOW_THREAT_COLOR)
 
 ns.dcfmt = LibPrettyPrint:Formatter({
