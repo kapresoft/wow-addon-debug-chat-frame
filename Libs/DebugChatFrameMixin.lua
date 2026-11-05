@@ -50,7 +50,7 @@ local debugConsoleOptionsDefault = {
 Support Functions
 -------------------------------------------------------------------------------]]
 --- @param color ColorMixin
---- @return fun(arg:any) : string The string wrapped in color code
+--- @return fun(arg:any): string
 local function NewFormatterFromColor(color)
   --- @param arg any
   return function(arg) return color:WrapTextInColorCode(tostring(arg)) end
@@ -88,7 +88,8 @@ local function _GetTabName(tab) return (tab and tab.GetText and tab:GetText()) o
 --[[-----------------------------------------------------------------------------
 Color Formatters
 -------------------------------------------------------------------------------]]
-local c1 = NewFormatterFromColor(FACTION_ORANGE_COLOR)
+-- c1: 8EACFF
+local c1 = NewFormatterFromColor(CreateColor(0.557, 0.675, 1.000, 1.0))
 local c2 = NewFormatterFromColor(BLUE_FONT_COLOR)
 local c3 = NewFormatterFromColor(YELLOW_FONT_COLOR)
 local c4 = NewFormatterFromColor(RED_FONT_COLOR)
@@ -186,7 +187,7 @@ end
 
 function c:RestoreDefaultChatFrame() DEFAULT_CHAT_FRAME = ChatFrame1 end
 
---- @param state boolean Setting to true will set the DebugChatFrame as the default chat frame
+--- @param state boolean @true makes this the DEFAULT_CHAT_FRAME
 function c:SetAsDefaultChatFrame(state)
   if state == true then
     DEFAULT_CHAT_FRAME = self
@@ -203,7 +204,7 @@ function c:SetAsDefaultChatFrameIfConfigured()
   self:SetAsDefaultChatFrame(self.options.makeDefaultChatFrame == true)
 end
 
---- @param selectInDock boolean|nil An optional parameter to select in dock
+--- @param selectInDock? boolean
 function c:RestoreChatFrame(selectInDock)
   if self:IsVisible() then return end
   self:SetAsDefaultChatFrameIfConfigured()
@@ -232,9 +233,9 @@ end
 Methods: DebugChatFrame
 -------------------------------------------------------------------------------]]
 
---- @param opt DebugChatFrameOptions?
---- @param callbackFn fun(chatFrame:ChatLogFrame) | "function(chatFrame) end" | "Set additional settings in the callbackFn"
---- @return ChatLogFrameInterface? @nil if Blizzard can't open the window
+--- @param opt? DebugChatFrameOptions
+--- @param callbackFn? fun(chatFrame:ChatLogFrame) @Applies additional settings
+--- @return ChatLogFrameInterface?                 @nil if Blizzard can't open the window
 function o:New(opt, callbackFn)
   local def = debugConsoleOptionsDefault
   opt = opt or def
@@ -316,7 +317,7 @@ function o:GetChatFrameTabText(chatFrame)
   return sformat('%s [%s]', tabFrameText, chatFrame:GetName())
 end
 
---- @return string The addon version string. Example: 2024.3.1
+--- @return string @e.g. 2024.3.1
 function o:GetVersion()
   local versionText = C_GetAddOnMetadata(ns.name, 'Version')
   --@do-not-package@
@@ -325,7 +326,7 @@ function o:GetVersion()
   return versionText
 end
 
---- @return (string|osdate)? The time in ISO Date Format. Example: 2024-03-22T17:34:00Z
+--- @return (string|osdate)? @ISO 8601, e.g. 2024-03-22T17:34:00Z; nil if not in the TOC
 function o:GetLastUpdate()
   local lastUpdate = C_GetAddOnMetadata(ns.name, GITHUB_LAST_CHANGED_DATE)
   --@do-not-package@
@@ -334,12 +335,12 @@ function o:GetLastUpdate()
   return lastUpdate
 end
 
----#### Example
----```
----local version, curseForge, issues, repo, lastUpdate, useKeyDown, wowInterfaceVersion = GC:GetAddonInfo()
----```
+--- ### Example:
+--- ```lua
+--- local version, curseForge, issues, repo, lastUpdate, interface = DebugChatFrame:GetAddonInfo()
+--- ```
 --- /dump DebugChatFrame:GetAddonInfo()
---- @return string?, string?, string?, string?, (string|osdate)?, number?
+--- @return string?, string?, string?, string?, (string|osdate)?, number? @Each nil if not in the TOC
 function o:GetAddonInfo()
   local lastUpdate = self:GetLastUpdate()
   local versionText = self:GetVersion()
@@ -373,9 +374,9 @@ end
 --- /run DebugChatFrame:Info()
 function o:Info() print(self:GetAddonInfoFormatted()) end
 
---- @param menuItem table|nil          @Legacy dropdown button; nil from the Menu API
---- @param chatFrame ChatLogFrame|nil
---- @param fontSize number|nil
+--- @param menuItem table? @Legacy dropdown button; nil from the Menu API
+--- @param chatFrame ChatLogFrame?
+--- @param fontSize number?
 local function OnFontSizeSet(menuItem, chatFrame, fontSize)
   local frame = chatFrame or FCF_GetCurrentChatFrame()
   if not (frame and frame.OnFontSizeChanged == c.OnFontSizeChanged) then return end

@@ -1,4 +1,4 @@
-## Interface: 11509, 20506, 30403, 40402, 50504, 120100, 120105, 16001
+## Interface: 11509, 16001, 20506, 30403, 40402, 50504, 120105
 ## Version: @project-version@
 ## Title: Debug|cff12E600Chat|rFrame
 ## IconTexture: Interface/AddOns/DebugChatFrame/Libs/Assets/logo-v3
@@ -50,5 +50,6 @@ Libs\Lib\Locales\enUS.lua
 Libs\Lib\Locales\Localization.lua
 Libs\DebugChatFrameMixin.lua
 #@do-not-package@
+Libs\Developer\Tests.lua
 Libs\Developer\Developer.lua
 #@end-do-not-package@
